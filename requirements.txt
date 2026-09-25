@@ -5,3 +5,4 @@ Flask-Login
 python-dotenv
 Pillow
 qrcode[pil]
+jdatetime
