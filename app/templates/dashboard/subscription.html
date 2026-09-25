@@ -231,7 +231,32 @@
 
         transition: 0.2s;
     }
+.option-locked {
+    background: #f1f1f2;
+    border-color: #e5e7eb;
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.75;
+}
 
+.option-locked:hover {
+    border-color: #e5e7eb;
+    background: #f1f1f2;
+}
+
+.option-locked .option-duration {
+    color: #999;
+}
+
+.option-locked .option-price {
+    color: #999;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.option-lock {
+    font-size: 14px;
+}
     .option-label:hover {
         border-color: #112557;
         background: #f1f4fb;
@@ -492,67 +517,110 @@
 
                 <div class="plan-options">
 
-                    {% for option in plan.options %}
+    {% for option in plan.options %}
 
-                        <label class="option-label">
+        {% if plan.name == "رایگان" and option.duration_days != 30 %}
 
-                            <div class="option-right">
+            <div class="option-label option-locked">
 
-                                <input
-                                    type="radio"
-                                    name="plan_{{ plan.id }}"
-                                    value="{{ option.id }}"
-                                    {% if loop.first %}checked{% endif %}
-                                >
+                <div class="option-right">
 
-                                <span class="option-duration">
+                    <span class="option-lock">
+                        🔒
+                    </span>
 
-                                    {% if option.duration_days == 30 %}
+                    <span class="option-duration">
 
-                                        ۱ ماهه
+                        {% if option.duration_days == 90 %}
 
-                                    {% elif option.duration_days == 90 %}
+                            ۳ ماهه
 
-                                        ۳ ماهه
+                        {% elif option.duration_days == 180 %}
 
-                                    {% elif option.duration_days == 180 %}
+                            ۶ ماهه
 
-                                        ۶ ماهه
+                        {% else %}
 
-                                    {% else %}
+                            {{ option.duration_days }} روزه
 
-                                        {{ option.duration_days }} روزه
+                        {% endif %}
 
-                                    {% endif %}
-
-                                </span>
-
-                            </div>
-
-
-                            <span class="option-price">
-
-                                {% if option.price == 0 %}
-
-                                    رایگان
-
-                                {% else %}
-
-                                    {{ "{:,}".format(option.price) }}
-
-                                    <span class="option-price-unit">
-                                        تومان
-                                    </span>
-
-                                {% endif %}
-
-                            </span>
-
-                        </label>
-
-                    {% endfor %}
+                    </span>
 
                 </div>
+
+
+                <span class="option-price">
+
+                    فقط ۱ ماهه
+
+                </span>
+
+            </div>
+
+        {% else %}
+
+            <label class="option-label">
+
+                <div class="option-right">
+
+                    <input
+                        type="radio"
+                        name="plan_{{ plan.id }}"
+                        value="{{ option.id }}"
+                        {% if loop.first %}checked{% endif %}
+                    >
+
+                    <span class="option-duration">
+
+                        {% if option.duration_days == 30 %}
+
+                            ۱ ماهه
+
+                        {% elif option.duration_days == 90 %}
+
+                            ۳ ماهه
+
+                        {% elif option.duration_days == 180 %}
+
+                            ۶ ماهه
+
+                        {% else %}
+
+                            {{ option.duration_days }} روزه
+
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <span class="option-price">
+
+                    {% if option.price == 0 %}
+
+                        رایگان
+
+                    {% else %}
+
+                        {{ "{:,}".format(option.price) }}
+
+                        <span class="option-price-unit">
+                            تومان
+                        </span>
+
+                    {% endif %}
+
+                </span>
+
+            </label>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
 
 
                 <!-- =====================================
