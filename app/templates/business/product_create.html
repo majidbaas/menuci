@@ -1,0 +1,1697 @@
+ 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        افزودن محصول | {{ business.name }}
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+@font-face {
+    font-family: Vazirmatn;
+    src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+}
+        body {
+            margin: 0;
+            font-family: Vazirmatn;
+            background: #f5f6f8;
+            color: #222;
+        }
+
+        /* =========================
+           Header
+        ========================== */
+
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .brand {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .back {
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back:hover {
+            color: #112557;
+        }
+
+        /* =========================
+           Container
+        ========================== */
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* =========================
+           Page Header
+        ========================== */
+
+        .page-header {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+
+            border: 1px solid #eeeeee;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: 25px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* =========================
+           Form Box
+        ========================== */
+
+        .form-box {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 30px;
+
+            border: 1px solid #eeeeee;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            padding: 12px 14px;
+
+            border: 1px solid #dcdfe4;
+            border-radius: 10px;
+
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 14px;
+
+            background: #ffffff;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #112557;
+            box-shadow: 0 0 0 3px rgba(17, 37, 87, 0.08);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.8;
+        }
+
+        small {
+            display: block;
+            margin-top: 7px;
+            color: #888;
+            font-size: 12px;
+        }
+
+        /* =========================
+           Category
+        ========================== */
+
+        .category-section {
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+
+            padding: 18px;
+
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            font-size: 15px;
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+        .category-hint {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .category-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .category-actions select {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        /* =========================
+           Buttons
+        ========================== */
+
+        .actions {
+            display: flex;
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            background: #112557;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            border: none;
+            cursor: pointer;
+
+            font-family: Tahoma, Arial, sans-serif;
+
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            opacity: 0.85;
+        }
+
+        .button-light {
+            background: #f1f1f1;
+            color: #222;
+        }
+
+        .button-success {
+            background: #16834b;
+        }
+
+        /* =========================
+           Flash Messages
+        ========================== */
+
+        .flash {
+            padding: 12px 15px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .flash.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* =========================
+           Mobile
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 15px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+
+            .page-header {
+                padding: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 21px;
+            }
+
+            .form-box {
+                padding: 20px;
+            }
+
+            .category-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .category-actions select {
+                min-width: 0;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .button {
+                width: 100%;
+                text-align: center;
+            }
+
+        }
+/* =========================
+   Category Modal
+========================= */
+
+.category-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.category-modal.active {
+
+    display: flex;
+}
+
+.category-modal-backdrop {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(5px);
+}
+
+.category-modal-box {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 500px;
+
+    background: #ffffff;
+
+    border-radius: 24px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.25);
+
+    animation:
+        categoryModalIn 0.2s ease;
+}
+
+@keyframes categoryModalIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px)
+            scale(0.97);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+}
+
+.category-modal-close {
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 15px;
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f5f9;
+
+    color: #475569;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.category-modal-close:hover {
+
+    background: #e2e8f0;
+}
+
+.category-modal-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 18px;
+
+    background: #eff6ff;
+
+    font-size: 28px;
+}
+
+.category-modal-box h2 {
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 21px;
+}
+
+.category-modal-subtitle {
+
+    margin: 8px 0 22px;
+
+    text-align: center;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+.category-modal-group {
+
+    margin-bottom: 17px;
+}
+
+.category-modal-group label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.category-modal-group input,
+.category-modal-group textarea {
+
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border: 1px solid #dcdfe4;
+
+    border-radius: 10px;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.category-modal-group input:focus,
+.category-modal-group textarea:focus {
+
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.category-modal-group textarea {
+
+    min-height: 90px;
+
+    resize: vertical;
+
+    line-height: 1.8;
+}
+
+.category-modal-message {
+
+    display: none;
+
+    padding: 10px 13px;
+
+    margin-bottom: 15px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+}
+
+.category-modal-message.error {
+
+    display: block;
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+.category-modal-message.success {
+
+    display: block;
+
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+.category-modal-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.category-modal-actions button {
+
+    flex: 1;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    font-family: Tahoma, Arial, sans-serif;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+.category-modal-cancel {
+
+    background: #f1f5f9;
+
+    color: #334155;
+}
+
+.category-modal-save {
+
+    background: #112557;
+
+    color: #ffffff;
+}
+
+.category-modal-save:hover {
+
+    opacity: 0.9;
+}
+
+.category-modal-save:disabled {
+
+    opacity: 0.6;
+
+    cursor: wait;
+}
+
+@media (max-width: 600px) {
+
+    .category-modal {
+
+        padding: 15px;
+    }
+
+    .category-modal-box {
+
+        padding: 24px 20px;
+
+        border-radius: 20px;
+    }
+
+    .category-modal-actions {
+
+        flex-direction: column;
+    }
+
+}
+
+/* =========================
+   Toast Messages
+========================= */
+
+.toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 9999;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: min(380px, calc(100vw - 32px));
+}
+
+.toast-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+
+    font-size: 14px;
+    line-height: 1.7;
+
+    animation: toast-in 0.3s ease;
+}
+
+.toast-message.success {
+    border-right: 4px solid #22c55e;
+}
+
+.toast-message.error {
+    border-right: 4px solid #ef4444;
+}
+
+.toast-message.warning {
+    border-right: 4px solid #f59e0b;
+}
+
+.toast-icon {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-weight: 700;
+    font-size: 15px;
+
+    background: #f1f5f9;
+}
+
+.toast-message.success .toast-icon {
+    color: #16a34a;
+    background: #dcfce7;
+}
+
+.toast-message.error .toast-icon {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+.toast-message.warning .toast-icon {
+    color: #d97706;
+    background: #fef3c7;
+}
+
+.toast-text {
+    flex: 1;
+}
+
+.toast-close {
+    border: none;
+    background: transparent;
+
+    color: #94a3b8;
+
+    font-size: 22px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    padding: 2px 4px;
+}
+
+.toast-close:hover {
+    color: #334155;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .toast-container {
+        top: 14px;
+        right: 16px;
+        left: 16px;
+
+        width: auto;
+    }
+
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     Header
+========================== -->
+
+<header class="header">
+
+    <div class="brand">
+        📱 منوی دیجیتال
+    </div>
+
+    <a
+        class="back"
+        href="{{ url_for('dashboard.index') }}"
+    >
+        ← بازگشت به داشبورد
+    </a>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- =========================
+         Page Header
+    ========================== -->
+
+    <section class="page-header">
+
+        <h1>
+            ➕ افزودن محصول
+        </h1>
+
+        <p>
+            افزودن محصول جدید به
+            <strong>{{ business.name }}</strong>
+        </p>
+
+    </section>
+
+
+<!-- =========================
+     Flash Messages / Toast
+========================== -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="toast-container">
+
+            {% for category, message in messages %}
+
+                <div class="toast-message {{ category }}" role="alert">
+
+                    <span class="toast-icon">
+                        {% if category == "success" %}
+                            ✓
+                        {% elif category == "error" %}
+                            !
+                        {% else %}
+                            i
+                        {% endif %}
+                    </span>
+
+                    <span class="toast-text">
+                        {{ message }}
+                    </span>
+
+                    <button
+                        type="button"
+                        class="toast-close"
+                        onclick="this.parentElement.remove()"
+                        aria-label="بستن"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+    <!-- =========================
+         Form
+    ========================== -->
+
+    <section class="form-box">
+
+<form method="POST" enctype="multipart/form-data">
+
+            <!-- نام محصول -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    نام محصول
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="مثلاً پیتزا مارگاریتا"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Slug -->
+
+            <div class="form-group">
+
+                <label for="slug">
+                    آدرس اختصاصی محصول (Slug)
+                </label>
+
+                <input
+                    type="text"
+                    id="slug"
+                    name="slug"
+                    placeholder="pizza-margherita"
+                    required
+                >
+
+                <small>
+                    مثال:
+                    pizza-margherita
+                </small>
+
+            </div>
+
+
+            <!-- =========================
+                 Category
+            ========================== -->
+
+            <div class="category-section">
+
+                <div class="category-title">
+                    📂 دسته‌بندی محصول
+                </div>
+
+                <div class="category-hint">
+                    در صورت نیاز می‌توانید محصول را در یکی از دسته‌بندی‌های موجود قرار دهید.
+                </div>
+
+                <div class="category-actions">
+
+                    <select name="category_id">
+
+                        <option value="">
+                            بدون دسته‌بندی
+                        </option>
+
+                        {% for category in categories %}
+
+                            <option value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                   <button
+    type="button"
+    class="button button-light"
+    id="open-category-modal"
+>
+    + ایجاد دسته‌بندی
+</button>
+
+                </div>
+
+            </div>
+
+<!-- =========================
+     تصویر محصول
+========================== -->
+
+<div class="form-group">
+
+    <label for="image">
+        🖼️ تصویر محصول
+    </label>
+
+    <input
+        type="file"
+        id="image"
+        name="image"
+        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+    >
+
+    <small>
+        فرمت‌های مجاز: JPG، JPEG، PNG و WebP
+    </small>
+
+    <!-- پیش‌نمایش -->
+    <div id="image-preview" style="margin-top: 15px;">
+
+        <div
+            id="no-image-preview"
+            style="
+                padding: 20px;
+                background: #f8fafc;
+                border: 1px dashed #cbd5e1;
+                border-radius: 12px;
+                color: #64748b;
+                text-align: center;
+            "
+        >
+            هنوز تصویری انتخاب نشده است.
+        </div>
+
+    </div>
+
+</div>
+            <!-- توضیحات -->
+
+            <div class="form-group">
+
+                <label for="description">
+                    توضیحات محصول
+                </label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="توضیحات مربوط به محصول..."
+                ></textarea>
+
+            </div>
+
+
+<!-- قیمت -->
+
+<div class="form-group">
+
+    <label for="price">
+        قیمت
+    </label>
+
+    <input
+        type="text"
+        id="price"
+        name="price"
+        inputmode="numeric"
+        autocomplete="off"
+        value="0"
+    >
+
+    <small>
+        قیمت را به تومان وارد کنید.
+    </small>
+
+</div>
+
+            <!-- ترتیب -->
+
+            <div class="form-group">
+
+                <label for="sort_order">
+                    ترتیب نمایش
+                </label>
+
+                <input
+                    type="number"
+                    id="sort_order"
+                    name="sort_order"
+                    value="0"
+                    min="0"
+                >
+
+                <small>
+                    عدد کمتر، محصول را بالاتر نمایش می‌دهد.
+                </small>
+
+            </div>
+
+
+            <!-- دکمه‌ها -->
+
+            <div class="actions">
+
+                <button
+                    type="submit"
+                    class="button button-success"
+                >
+                    💾 ذخیره محصول
+                </button>
+
+                <a
+                    class="button button-light"
+                    href="{{ url_for(
+                        'business.products',
+                        business_id=business.id
+                    ) }}"
+                >
+                    انصراف
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     Category Modal
+========================================================= -->
+
+<div
+    id="category-modal"
+    class="category-modal"
+>
+
+    <div class="category-modal-backdrop"></div>
+
+    <div
+        class="category-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="category-modal-title"
+    >
+
+        <button
+            type="button"
+            class="category-modal-close"
+            id="close-category-modal"
+        >
+            ×
+        </button>
+
+        <div class="category-modal-icon">
+            📂
+        </div>
+
+        <h2 id="category-modal-title">
+            ایجاد دسته‌بندی جدید
+        </h2>
+
+        <p class="category-modal-subtitle">
+            دسته‌بندی جدید را ایجاد کنید و به محصول اختصاص دهید.
+        </p>
+
+
+        <!-- پیام خطا / موفقیت -->
+
+        <div
+            id="category-modal-message"
+            class="category-modal-message"
+        ></div>
+
+
+        <div class="category-modal-group">
+
+            <label for="new-category-name">
+                نام دسته‌بندی
+            </label>
+
+            <input
+                type="text"
+                id="new-category-name"
+                placeholder="مثلاً پیتزا"
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <div class="category-modal-group">
+
+            <label for="new-category-description">
+                توضیحات
+            </label>
+
+            <textarea
+                id="new-category-description"
+                placeholder="توضیحات دسته‌بندی..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="category-modal-group">
+
+            <label for="new-category-sort-order">
+                ترتیب نمایش
+            </label>
+
+            <input
+                type="number"
+                id="new-category-sort-order"
+                value="0"
+                min="0"
+            >
+
+        </div>
+
+
+        <div class="category-modal-actions">
+
+            <button
+                type="button"
+                class="category-modal-cancel"
+                id="cancel-category-modal"
+            >
+                انصراف
+            </button>
+
+            <button
+                type="button"
+                class="category-modal-save"
+                id="save-category-modal"
+            >
+                ➕ ایجاد دسته
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const imageInput = document.getElementById("image");
+    const imagePreview = document.getElementById("image-preview");
+
+    imageInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        // بررسی اینکه فایل واقعاً تصویر باشد
+        if (!file.type.startsWith("image/")) {
+
+            alert("لطفاً یک فایل تصویری انتخاب کنید.");
+
+            this.value = "";
+
+            return;
+        }
+
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+
+            imagePreview.innerHTML = `
+                <img
+                    src="${event.target.result}"
+                    alt="پیش‌نمایش تصویر محصول"
+                    style="
+                        width: 150px;
+                        height: 150px;
+                        object-fit: cover;
+                        border-radius: 16px;
+                        border: 1px solid #e5e7eb;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+                        display: block;
+                    "
+                >
+            `;
+
+        };
+
+        reader.readAsDataURL(file);
+
+    });
+
+</script>
+<script>
+
+    // =========================================================
+    // Category Modal
+    // =========================================================
+
+    const categoryModal =
+        document.getElementById("category-modal");
+
+    const openCategoryModal =
+        document.getElementById("open-category-modal");
+
+    const closeCategoryModal =
+        document.getElementById("close-category-modal");
+
+    const cancelCategoryModal =
+        document.getElementById("cancel-category-modal");
+
+    const saveCategoryModal =
+        document.getElementById("save-category-modal");
+
+    const categoryModalBackdrop =
+        document.querySelector(".category-modal-backdrop");
+
+    const categoryMessage =
+        document.getElementById("category-modal-message");
+
+    const categoryNameInput =
+        document.getElementById("new-category-name");
+
+    const categoryDescriptionInput =
+        document.getElementById("new-category-description");
+
+    const categorySortInput =
+        document.getElementById("new-category-sort-order");
+
+
+    // =========================================================
+    // باز کردن Popup
+    // =========================================================
+
+    function showCategoryModal() {
+
+        categoryModal.classList.add("active");
+
+        categoryMessage.className =
+            "category-modal-message";
+
+        categoryMessage.textContent = "";
+
+        setTimeout(function () {
+
+            categoryNameInput.focus();
+
+        }, 100);
+    }
+
+
+    // =========================================================
+    // بستن Popup
+    // =========================================================
+
+    function hideCategoryModal() {
+
+        categoryModal.classList.remove("active");
+
+        categoryNameInput.value = "";
+
+        categoryDescriptionInput.value = "";
+
+        categorySortInput.value = "0";
+
+        categoryMessage.className =
+            "category-modal-message";
+
+        categoryMessage.textContent = "";
+
+        saveCategoryModal.disabled = false;
+
+        saveCategoryModal.textContent =
+            "➕ ایجاد دسته";
+    }
+
+
+    // =========================================================
+    // نمایش پیام
+    // =========================================================
+
+    function showCategoryMessage(
+        message,
+        type
+    ) {
+
+        categoryMessage.textContent =
+            message;
+
+        categoryMessage.className =
+            "category-modal-message " + type;
+    }
+
+
+    // =========================================================
+    // باز کردن
+    // =========================================================
+
+    openCategoryModal.addEventListener(
+        "click",
+        showCategoryModal
+    );
+
+
+    // =========================================================
+    // بستن
+    // =========================================================
+
+    closeCategoryModal.addEventListener(
+        "click",
+        hideCategoryModal
+    );
+
+    cancelCategoryModal.addEventListener(
+        "click",
+        hideCategoryModal
+    );
+
+    categoryModalBackdrop.addEventListener(
+        "click",
+        hideCategoryModal
+    );
+
+
+    // =========================================================
+    // کلید Escape
+    // =========================================================
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                categoryModal.classList.contains("active")
+            ) {
+
+                hideCategoryModal();
+
+            }
+
+        }
+    );
+
+
+    // =========================================================
+    // ایجاد دسته‌بندی
+    // =========================================================
+
+    saveCategoryModal.addEventListener(
+        "click",
+        async function () {
+
+            const name =
+                categoryNameInput.value.trim();
+
+            const description =
+                categoryDescriptionInput.value.trim();
+
+            const sortOrder =
+                categorySortInput.value.trim() || "0";
+
+
+            // -------------------------------------------------
+            // بررسی نام
+            // -------------------------------------------------
+
+            if (!name) {
+
+                showCategoryMessage(
+                    "نام دسته‌بندی را وارد کنید.",
+                    "error"
+                );
+
+                categoryNameInput.focus();
+
+                return;
+            }
+
+
+            // -------------------------------------------------
+            // حالت در حال ذخیره
+            // -------------------------------------------------
+
+            saveCategoryModal.disabled = true;
+
+            saveCategoryModal.textContent =
+                "⏳ در حال ایجاد...";
+
+
+            // -------------------------------------------------
+            // ارسال اطلاعات
+            // -------------------------------------------------
+
+            const formData = new FormData();
+
+            formData.append(
+                "name",
+                name
+            );
+
+            formData.append(
+                "description",
+                description
+            );
+
+            formData.append(
+                "sort_order",
+                sortOrder
+            );
+
+
+            try {
+
+                const response = await fetch(
+                    "{{ url_for(
+                        'business.create_category',
+                        business_id=business.id
+                    ) }}",
+                    {
+                        method: "POST",
+
+                        body: formData,
+
+                        headers: {
+                            "X-Requested-With":
+                                "XMLHttpRequest"
+                        }
+                    }
+                );
+
+
+                const data =
+                    await response.json();
+
+
+                // -------------------------------------------------
+                // خطا
+                // -------------------------------------------------
+
+                if (!response.ok || !data.success) {
+
+                    showCategoryMessage(
+                        data.message ||
+                        "ایجاد دسته‌بندی انجام نشد.",
+                        "error"
+                    );
+
+                    saveCategoryModal.disabled = false;
+
+                    saveCategoryModal.textContent =
+                        "➕ ایجاد دسته";
+
+                    return;
+                }
+
+
+                // -------------------------------------------------
+                // دسته با موفقیت ایجاد شد
+                // -------------------------------------------------
+
+                const category =
+                    data.category;
+
+
+                // -------------------------------------------------
+                // اضافه کردن دسته جدید به Select
+                // -------------------------------------------------
+
+                const categorySelect =
+                    document.querySelector(
+                        'select[name="category_id"]'
+                    );
+
+
+                if (categorySelect) {
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value =
+                        category.id;
+
+                    option.textContent =
+                        category.name;
+
+                    categorySelect.appendChild(
+                        option
+                    );
+
+
+                    // انتخاب خودکار دسته جدید
+
+                    categorySelect.value =
+                        category.id;
+                }
+
+
+                // -------------------------------------------------
+                // پیام موفقیت کوتاه
+                // -------------------------------------------------
+
+                showCategoryMessage(
+                    "دسته‌بندی با موفقیت ایجاد شد.",
+                    "success"
+                );
+
+
+                // -------------------------------------------------
+                // کمی مکث و بستن Popup
+                // -------------------------------------------------
+
+                setTimeout(
+                    function () {
+
+                        hideCategoryModal();
+
+                    },
+                    500
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                showCategoryMessage(
+                    "ارتباط با سرور برقرار نشد.",
+                    "error"
+                );
+
+                saveCategoryModal.disabled = false;
+
+                saveCategoryModal.textContent =
+                    "➕ ایجاد دسته";
+            }
+
+        }
+    );
+
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const toasts = document.querySelectorAll(".toast-message");
+
+        toasts.forEach(function (toast) {
+
+            setTimeout(function () {
+
+                toast.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+                toast.style.opacity = "0";
+                toast.style.transform = "translateY(-10px)";
+
+                setTimeout(function () {
+                    toast.remove();
+                }, 300);
+
+            }, 3500);
+
+        });
+
+    });
+</script>
+<script>
+
+    const priceInput = document.getElementById("price");
+
+    function formatPrice(value) {
+
+        const digits = value
+            .replace(/,/g, "")
+            .replace(/\D/g, "");
+
+        if (!digits) {
+            return "";
+        }
+
+        return Number(digits).toLocaleString("en-US");
+    }
+
+
+    priceInput.addEventListener("input", function () {
+
+        const cursorPosition = this.selectionStart;
+        const oldValue = this.value;
+
+        this.value = formatPrice(this.value);
+
+        const commaCountBefore = (
+            oldValue
+            .slice(0, cursorPosition)
+            .match(/,/g) || []
+        ).length;
+
+        const commaCountAfter = (
+            this.value
+            .slice(0, cursorPosition)
+            .match(/,/g) || []
+        ).length;
+
+        const newCursorPosition =
+            cursorPosition +
+            (commaCountAfter - commaCountBefore);
+
+        this.setSelectionRange(
+            newCursorPosition,
+            newCursorPosition
+        );
+
+    });
+
+
+    document.querySelector("form").addEventListener(
+        "submit",
+        function () {
+
+            priceInput.value =
+                priceInput.value.replace(/,/g, "");
+
+        }
+    );
+
+</script>
+</body>
+
+</html>
+ 

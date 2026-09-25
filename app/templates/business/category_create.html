@@ -1,0 +1,289 @@
+ 
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>افزودن دسته‌بندی</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+@font-face {
+    font-family: Vazirmatn;
+    src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+}
+        body {
+            margin: 0;
+            padding: 40px 20px;
+
+            font-family: Vazirmatn;
+
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+
+            background: #ffffff;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+
+            font-size: 25px;
+        }
+
+        .business-name {
+            margin-bottom: 25px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 12px;
+
+            margin-bottom: 20px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #2563eb;
+        }
+
+        textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        .actions {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 5px;
+        }
+
+        button {
+            flex: 1;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 15px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .back {
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            background: #f1f1f1;
+
+            color: #333;
+
+            text-decoration: none;
+
+            font-size: 15px;
+        }
+
+        .back:hover {
+            background: #e7e7e7;
+        }
+
+        .flash {
+            padding: 12px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 10px;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 20px 15px;
+            }
+
+            .container {
+                padding: 22px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>
+        ➕ افزودن دسته‌بندی
+    </h1>
+
+    <div class="business-name">
+        کسب‌وکار:
+        <strong>{{ business.name }}</strong>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <form
+        method="POST"
+        action="{{ url_for(
+            'business.create_category',
+            business_id=business.id
+        ) }}"
+    >
+
+        <label for="name">
+            نام دسته‌بندی
+        </label>
+
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="مثلاً پیتزا"
+            required
+        >
+
+
+        <label for="description">
+            توضیحات
+        </label>
+
+        <textarea
+            id="description"
+            name="description"
+            placeholder="توضیحات دسته‌بندی..."
+        ></textarea>
+
+
+        <label for="sort_order">
+            ترتیب نمایش
+        </label>
+
+        <input
+            type="number"
+            id="sort_order"
+            name="sort_order"
+            value="0"
+            min="0"
+        >
+
+
+        <div class="actions">
+
+            <button type="submit">
+                ذخیره دسته‌بندی
+            </button>
+
+            <a
+                class="back"
+                href="{{ url_for(
+                    'business.categories',
+                    business_id=business.id
+                ) }}"
+            >
+                ← بازگشت
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
+ 

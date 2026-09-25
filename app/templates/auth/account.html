@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>حساب کاربری | منوی دیجیتال</title>
+
+<style>
+
+    /* =========================================
+       Font
+    ========================================= */
+
+    @font-face {
+
+        font-family: Vazirmatn;
+
+        src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+
+    }
+
+
+    * {
+
+        box-sizing: border-box;
+
+    }
+
+
+    body {
+
+        margin: 0;
+
+        min-height: 100vh;
+
+        font-family: Vazirmatn, Tahoma, sans-serif;
+
+        background: #f5f6f8;
+
+        color: #222;
+
+        display: flex;
+
+        flex-direction: column;
+
+    }
+
+
+    /* =========================================
+       Header
+    ========================================= */
+
+    .header {
+
+        width: 100%;
+
+        background: #ffffff;
+
+        border-bottom: 1px solid #e5e7eb;
+
+        padding: 18px 35px;
+
+    }
+
+
+    .header-content {
+
+        max-width: 1200px;
+
+        margin: 0 auto;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+    }
+
+
+    .brand {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        text-decoration: none;
+
+        color: #112557;
+
+        font-size: 20px;
+
+        font-weight: bold;
+
+    }
+
+
+    .brand-icon {
+
+        width: 42px;
+
+        height: 42px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #eef5ff;
+
+        border-radius: 12px;
+
+        font-size: 22px;
+
+    }
+
+
+    .back-link {
+
+        color: #555;
+
+        text-decoration: none;
+
+        font-size: 14px;
+
+    }
+
+
+    .back-link strong {
+
+        color: #112557;
+
+    }
+
+
+    /* =========================================
+       Main
+    ========================================= */
+
+    .page {
+
+        flex: 1;
+
+        display: flex;
+
+        justify-content: center;
+
+        padding: 40px 20px;
+
+    }
+
+
+    .account-container {
+
+        width: 100%;
+
+        max-width: 760px;
+
+    }
+
+
+    /* =========================================
+       Page Heading
+    ========================================= */
+
+    .page-heading {
+
+        text-align: center;
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .page-icon {
+
+        width: 64px;
+
+        height: 64px;
+
+        margin: 0 auto 15px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #eef5ff;
+
+        border-radius: 18px;
+
+        font-size: 30px;
+
+    }
+
+
+    .page-heading h1 {
+
+        margin: 0 0 8px;
+
+        font-size: 24px;
+
+        color: #112557;
+
+    }
+
+
+    .page-heading p {
+
+        margin: 0;
+
+        color: #777;
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+    }
+
+
+    /* =========================================
+       Card
+    ========================================= */
+
+    .account-card {
+
+        width: 100%;
+
+        background: #ffffff;
+
+        border: 1px solid #e5e7eb;
+
+        border-radius: 20px;
+
+        padding: 30px;
+
+        margin-bottom: 20px;
+
+        box-shadow:
+            0 10px 35px rgba(0, 0, 0, 0.06);
+
+    }
+
+
+    .card-title {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 9px;
+
+        margin-bottom: 25px;
+
+        padding-bottom: 15px;
+
+        border-bottom: 1px solid #eeeeee;
+
+    }
+
+
+    .card-title-icon {
+
+        font-size: 20px;
+
+    }
+
+
+    .card-title h2 {
+
+        margin: 0;
+
+        font-size: 18px;
+
+        color: #112557;
+
+    }
+
+
+    /* =========================================
+       Form Grid
+    ========================================= */
+
+    .form-grid {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 18px;
+
+    }
+
+
+    .form-group {
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .form-group.full-width {
+
+        grid-column: 1 / -1;
+
+    }
+
+
+    label {
+
+        display: block;
+
+        margin-bottom: 8px;
+
+        font-size: 14px;
+
+        font-weight: 500;
+
+        color: #333;
+
+    }
+
+
+    input {
+
+        width: 100%;
+
+        height: 48px;
+
+        padding: 0 14px;
+
+        border: 1px solid #dcdfe4;
+
+        border-radius: 12px;
+
+        background: #ffffff;
+
+        font-family: inherit;
+
+        font-size: 14px;
+
+        outline: none;
+
+        transition: 0.2s;
+
+    }
+
+
+    input:focus {
+
+        border-color: #112557;
+
+        box-shadow:
+            0 0 0 3px rgba(17, 37, 87, 0.08);
+
+    }
+
+
+    /* =========================================
+       Username Guide
+    ========================================= */
+
+    .username-guide {
+
+        display: flex;
+
+        align-items: flex-start;
+
+        gap: 7px;
+
+        margin-top: 8px;
+
+        padding: 9px 11px;
+
+        border-radius: 9px;
+
+        background: #f5f8ff;
+
+        color: #5f6b82;
+
+        font-size: 12px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .username-guide-icon {
+
+        flex-shrink: 0;
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+    }
+
+
+    /* =========================================
+       Optional Guide
+    ========================================= */
+
+    .field-guide {
+
+        margin-top: 7px;
+
+        color: #777;
+
+        font-size: 12px;
+
+        line-height: 1.8;
+
+    }
+
+
+    /* =========================================
+       Button
+    ========================================= */
+
+    .submit-button {
+
+        width: 100%;
+
+        height: 50px;
+
+        margin-top: 5px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background: #112557;
+
+        color: #ffffff;
+
+        font-family: inherit;
+
+        font-size: 15px;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+
+    }
+
+
+    .submit-button:hover {
+
+        opacity: 0.92;
+
+        transform: translateY(-1px);
+
+    }
+
+
+    /* =========================================
+       Messages
+    ========================================= */
+
+    .message {
+
+        padding: 13px 15px;
+
+        margin-bottom: 20px;
+
+        border-radius: 12px;
+
+        font-size: 14px;
+
+        line-height: 1.8;
+
+    }
+
+
+    .message.error {
+
+        background: #fef2f2;
+
+        color: #991b1b;
+
+        border-right: 4px solid #dc2626;
+
+    }
+
+
+    .message.success {
+
+        background: #f0fdf4;
+
+        color: #166534;
+
+        border-right: 4px solid #16a34a;
+
+    }
+
+
+    .message.warning {
+
+        background: #fffbeb;
+
+        color: #92400e;
+
+        border-right: 4px solid #f59e0b;
+
+    }
+
+
+    /* =========================================
+       Divider
+    ========================================= */
+
+    .section-divider {
+
+        height: 1px;
+
+        background: #eeeeee;
+
+        margin: 5px 0 25px;
+
+    }
+
+
+    /* =========================================
+       Footer
+    ========================================= */
+
+    .account-footer {
+
+        text-align: center;
+
+        margin-top: 5px;
+
+        padding: 10px 0 20px;
+
+        font-size: 14px;
+
+        color: #666;
+
+    }
+
+
+    .account-footer a {
+
+        color: #112557;
+
+        font-weight: bold;
+
+        text-decoration: none;
+
+    }
+
+
+    /* =========================================
+       Responsive
+    ========================================= */
+
+    @media (max-width: 600px) {
+
+        .header {
+
+            padding: 15px;
+
+        }
+
+
+        .brand {
+
+            font-size: 17px;
+
+        }
+
+
+        .brand-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+        }
+
+
+        .back-link {
+
+            font-size: 13px;
+
+        }
+
+
+        .page {
+
+            padding: 25px 15px;
+
+        }
+
+
+        .account-card {
+
+            padding: 25px 20px;
+
+            border-radius: 18px;
+
+        }
+
+
+        .form-grid {
+
+            grid-template-columns: 1fr;
+
+            gap: 0;
+
+        }
+
+
+        .form-group.full-width {
+
+            grid-column: auto;
+
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<header class="header">
+
+ 
+<div class="header-content">
+
+
+    <a
+        href="{{ url_for('public.home') }}"
+        class="brand"
+    >
+
+        <div class="brand-icon">
+            📋
+        </div>
+
+        <span>
+            منوی دیجیتال
+        </span>
+
+    </a>
+
+
+    <a
+        href="{{ url_for('dashboard.index') }}"
+        class="back-link"
+    >
+
+        بازگشت به
+        <strong>
+            داشبورد
+        </strong>
+
+    </a>
+
+
+</div>
+ 
+
+</header>
+
+<main class="page">
+
+ 
+<div class="account-container">
+
+
+    <!-- Page Heading -->
+
+    <div class="page-heading">
+
+        <div class="page-icon">
+            👤
+        </div>
+
+
+        <h1>
+            حساب کاربری
+        </h1>
+
+
+        <p>
+            اطلاعات حساب و رمز عبور خود را مدیریت کنید.
+        </p>
+
+    </div>
+
+
+
+    <!-- Messages -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="message {{ category }}">
+
+                    {{ message }}
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <!-- Profile Card -->
+
+    <section class="account-card">
+
+
+        <div class="card-title">
+
+            <span class="card-title-icon">
+                👤
+            </span>
+
+            <h2>
+                اطلاعات حساب
+            </h2>
+
+        </div>
+
+
+
+        <form method="POST">
+
+
+            <input
+                type="hidden"
+                name="form_type"
+                value="profile"
+            >
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="first_name">
+                        نام
+                    </label>
+
+                    <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        value="{{ current_user.first_name or '' }}"
+                        autocomplete="given-name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="last_name">
+                        نام خانوادگی
+                    </label>
+
+                    <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        value="{{ current_user.last_name or '' }}"
+                        autocomplete="family-name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group full-width">
+
+                    <label for="username">
+                        نام کاربری
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        value="{{ current_user.username or '' }}"
+                        dir="ltr"
+                        autocomplete="username"
+                        pattern="[A-Za-z0-9_-]+"
+                        title="نام کاربری فقط می‌تواند شامل حروف انگلیسی، عدد، _ و - باشد و نباید فاصله داشته باشد."
+                        required
+                    >
+
+
+                    <div class="username-guide">
+
+                        <span class="username-guide-icon">
+                            💡
+                        </span>
+
+                        <span>
+                            نام کاربری شامل حروف انگلیسی، عدد،
+                            <strong>_</strong>
+                            یا
+                            <strong>-</strong>
+                            است.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        ایمیل
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ current_user.email or '' }}"
+                        dir="ltr"
+                        autocomplete="email"
+                        placeholder="مثلاً example@gmail.com"
+                    >
+
+                    <div class="field-guide">
+                        اختیاری است، اما برای بازیابی حساب بهتر است ثبت شود.
+                    </div>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="mobile">
+                        شماره موبایل
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        name="mobile"
+                        value="{{ current_user.mobile or '' }}"
+                        dir="ltr"
+                        autocomplete="tel"
+                        placeholder="مثلاً 09123456789"
+                    >
+
+                    <div class="field-guide">
+                        اختیاری است، اما برای بازیابی حساب بهتر است ثبت شود.
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+
+                ذخیره اطلاعات حساب
+
+            </button>
+
+
+        </form>
+
+
+    </section>
+
+
+
+    <!-- Password Card -->
+
+    <section class="account-card">
+
+
+        <div class="card-title">
+
+            <span class="card-title-icon">
+                🔐
+            </span>
+
+            <h2>
+                تغییر رمز عبور
+            </h2>
+
+        </div>
+
+
+
+        <form method="POST">
+
+
+            <input
+                type="hidden"
+                name="form_type"
+                value="password"
+            >
+
+
+            <div class="form-group">
+
+                <label for="current_password">
+                    رمز عبور فعلی
+                </label>
+
+                <input
+                    type="password"
+                    id="current_password"
+                    name="current_password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="new_password">
+                        رمز عبور جدید
+                    </label>
+
+                    <input
+                        type="password"
+                        id="new_password"
+                        name="new_password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="confirm_password">
+                        تکرار رمز عبور جدید
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+
+                تغییر رمز عبور
+
+            </button>
+
+
+        </form>
+
+
+    </section>
+
+
+
+    <div class="account-footer">
+
+    </div>
+
+
+</div>
+ 
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,1313 @@
+ 
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مدیریت اشتراک‌ها | MenuCi</title>
+
+    <style>
+
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    #eef2ff 0,
+                    #f7f8fc 35%,
+                    #f5f6f8 70%
+                );
+
+            font-family: "Vazirmatn", sans-serif;
+            color: #1f2937;
+        }
+
+        /* =========================
+           Header
+        ========================= */
+
+        .header {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid #e5e7eb;
+
+            padding: 16px 30px;
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1350px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            font-size: 20px;
+            font-weight: 800;
+
+            color: #112557;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: #112557;
+            color: #ffffff;
+
+            font-size: 18px;
+
+            box-shadow: 0 7px 18px rgba(17, 37, 87, 0.18);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            font-size: 13px;
+        }
+
+        .user-email {
+            color: #6b7280;
+            direction: ltr;
+        }
+
+        .header-left a {
+            color: #112557;
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+        .header-left a:hover {
+            color: #3158c9;
+        }
+
+        .logout {
+            color: #b42318 !important;
+        }
+
+        /* =========================
+           Main
+        ========================= */
+
+        .container {
+            max-width: 1350px;
+
+            margin: 35px auto;
+
+            padding: 0 20px;
+        }
+
+        .page-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .title-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .title-icon {
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 16px;
+
+            background: #eef2ff;
+            color: #112557;
+
+            font-size: 25px;
+        }
+
+        .page-title h1 {
+            margin: 0 0 6px;
+
+            font-size: 27px;
+            font-weight: 800;
+
+            color: #112557;
+        }
+
+        .page-title p {
+            margin: 0;
+
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* =========================
+           Flash Messages
+        ========================= */
+
+        .messages {
+            position: fixed;
+
+            top: 82px;
+            right: 20px;
+
+            width: 360px;
+            max-width: calc(100vw - 40px);
+
+            z-index: 9999;
+
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .message {
+            background: #ffffff;
+
+            padding: 15px 18px;
+
+            border-radius: 13px;
+
+            font-size: 13px;
+            line-height: 1.8;
+
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.10);
+
+            border-right: 4px solid transparent;
+
+            transition:
+                opacity 0.4s ease,
+                transform 0.4s ease;
+        }
+
+        .message-success {
+            border-right-color: #16a36a;
+        }
+
+        .message-error {
+            border-right-color: #d92d20;
+        }
+
+        .message-warning {
+            border-right-color: #f79009;
+        }
+
+        .message-hide {
+            opacity: 0;
+            transform: translateX(25px);
+        }
+
+        /* =========================
+           Buttons
+        ========================= */
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 7px;
+
+            min-height: 38px;
+
+            padding: 8px 13px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #112557;
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-family: inherit;
+            font-size: 12px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.18s ease,
+                box-shadow 0.18s ease,
+                background 0.18s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 6px 15px rgba(17, 37, 87, 0.16);
+        }
+
+        .button-light {
+            background: #f1f3f7;
+            color: #374151;
+        }
+
+        .button-light:hover {
+            background: #e7eaf0;
+            box-shadow: none;
+        }
+
+        .button-success {
+            background: #15966b;
+            color: #ffffff;
+        }
+
+        .button-success:hover {
+            background: #117c59;
+        }
+
+        .button-danger {
+            background: #d64545;
+            color: #ffffff;
+        }
+
+        .button-danger:hover {
+            background: #b93636;
+        }
+
+        /* =========================
+           Summary
+        ========================= */
+
+        .summary {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 18px;
+        }
+
+        .summary-card {
+            background: #ffffff;
+
+            border: 1px solid #e7eaf0;
+
+            border-radius: 16px;
+
+            padding: 18px 20px;
+
+            box-shadow:
+                0 5px 18px rgba(17, 37, 87, 0.045);
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-size: 12px;
+
+            margin-bottom: 7px;
+        }
+
+        .summary-value {
+            color: #112557;
+
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .summary-value.pending {
+            color: #c47a09;
+        }
+
+        .summary-value.active {
+            color: #14845b;
+        }
+
+        /* =========================
+           Table Card
+        ========================= */
+
+        .table-card {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 18px;
+
+            padding: 7px;
+
+            box-shadow:
+                0 8px 25px rgba(17, 37, 87, 0.055);
+
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: separate;
+            border-spacing: 0;
+
+            min-width: 1120px;
+        }
+
+        th {
+            background: #f7f8fb;
+
+            color: #526078;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            padding: 14px 13px;
+
+            text-align: right;
+
+            border-bottom: 1px solid #e7eaf0;
+
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            border-radius: 0 11px 0 0;
+        }
+
+        th:last-child {
+            border-radius: 11px 0 0 0;
+        }
+
+        td {
+            padding: 15px 13px;
+
+            font-size: 12px;
+
+            color: #4b5563;
+
+            border-bottom: 1px solid #f0f1f4;
+
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            transition: background 0.18s ease;
+        }
+
+        tbody tr:hover {
+            background: #fafbff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* =========================
+           User
+        ========================= */
+
+        .user-cell {
+            min-width: 150px;
+        }
+
+        .name {
+            display: block;
+
+            font-weight: 700;
+
+            color: #112557;
+
+            margin-bottom: 3px;
+        }
+
+        .user-id {
+            color: #9ca3af;
+
+            font-size: 10px;
+        }
+
+        .email {
+            direction: ltr;
+            text-align: right;
+
+            color: #667085;
+
+            font-size: 11px;
+        }
+
+        /* =========================
+           Plan
+        ========================= */
+
+        .plan {
+            display: inline-flex;
+
+            padding: 6px 10px;
+
+            border-radius: 8px;
+
+            background: #eef2ff;
+
+            color: #304a99;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .duration {
+            color: #4b5563;
+            white-space: nowrap;
+        }
+
+        .price {
+            color: #112557;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+        }
+
+        .free {
+            color: #15966b;
+        }
+
+        /* =========================
+           Status
+        ========================= */
+
+        .status {
+            display: inline-flex;
+
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 10px;
+
+            border-radius: 999px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .status::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: currentColor;
+        }
+
+        .status-pending {
+            background: #fff6df;
+            color: #b77908;
+        }
+
+        .status-active {
+            background: #e8f8f1;
+            color: #14845b;
+        }
+
+        .status-inactive {
+            background: #fcecec;
+            color: #b42318;
+        }
+
+        .status-default {
+            background: #eef0f3;
+            color: #667085;
+        }
+
+        /* =========================
+           Actions
+        ========================= */
+ 
+
+        .actions form {
+            margin: 0;
+        }
+
+        .actions .button {
+            min-height: 34px;
+            padding: 7px 11px;
+        }
+
+        /* =========================
+           Empty State
+        ========================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 70px 20px;
+        }
+
+        .empty-icon {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 22px;
+
+            background: #eef2ff;
+
+            font-size: 31px;
+        }
+
+        .empty h2 {
+            margin: 0 0 9px;
+
+            color: #112557;
+
+            font-size: 20px;
+        }
+
+        .empty p {
+            margin: 0;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+
+
+/* =========================
+   Admin Message
+========================= */
+/* =========================================
+   Subscription Actions
+========================================= */
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    min-width: 420px;
+}
+
+
+/* مشاهده رسید */
+
+.actions > .button-light {
+    align-self: flex-start;
+    white-space: nowrap;
+}
+
+
+/* فرم تأیید و رد */
+
+.approval-form,
+.reject-form {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    width: 100%;
+}
+
+
+/* فیلد پیام */
+
+.admin-message-input {
+    flex: 1;
+    min-width: 0;
+    height: 34px;
+    padding: 6px 10px;
+
+    border: 1px solid #d7dbe2;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    outline: none;
+    box-sizing: border-box;
+}
+
+.admin-message-input:focus {
+    border-color: #112557;
+    box-shadow: 0 0 0 3px rgba(17, 37, 87, 0.07);
+}
+
+.admin-message-input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* دکمه‌های تأیید و رد */
+
+.approval-form .button,
+.reject-form .button {
+    flex-shrink: 0;
+    white-space: nowrap;
+    min-width: 82px;
+}
+.admin-message-input:focus {
+    border-color: #112557;
+
+    box-shadow:
+        0 0 0 3px rgba(17, 37, 87, 0.07);
+}
+
+.admin-message-input::placeholder {
+    color: #9ca3af;
+}
+
+        /* =========================
+           Responsive
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .header {
+                padding: 14px 18px;
+            }
+
+            .header-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .header-left {
+                width: 100%;
+
+                flex-wrap: wrap;
+
+                gap: 12px;
+            }
+
+            .container {
+                margin: 25px auto;
+                padding: 0 15px;
+            }
+
+            .page-title {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .title-icon {
+                width: 48px;
+                height: 48px;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+            .messages {
+                top: 15px;
+                right: 10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     Header
+========================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                📱
+            </div>
+
+            <span>
+                MenuCi
+            </span>
+
+            <span style="color:#9ca3af;">
+                |
+            </span>
+
+            <span style="font-size:14px; font-weight:600;">
+                پنل مدیریت
+            </span>
+
+        </div>
+
+
+        <div class="header-left">
+
+            <span class="user-email">
+                {{ current_user.email }}
+            </span>
+
+            <a href="{{ url_for('dashboard.index') }}">
+                داشبورد
+            </a>
+
+            <a href="{{ url_for('public.home') }}">
+                صفحه اصلی
+            </a>
+
+            <a class="logout" href="{{ url_for('auth.logout') }}">
+                خروج
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     Main
+========================= -->
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <div class="title-content">
+
+            <div class="title-icon">
+                💳
+            </div>
+
+            <div>
+
+                <h1>
+                    مدیریت اشتراک‌ها
+                </h1>
+
+                <p>
+                    مشاهده، بررسی و مدیریت درخواست‌های اشتراک کاربران
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+            <a
+                class="button button-light"
+                href="{{ url_for('admin.index') }}"
+            >
+                ←
+                <span>
+                    بازگشت به پنل
+                </span>
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         Flash Messages
+    ========================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="messages" id="flash-messages">
+
+                {% for category, message in messages %}
+
+                    <div class="message message-{{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =========================
+         Summary
+    ========================= -->
+
+    {% set pending_count = subscriptions | selectattr("status", "equalto", "pending_review") | list | length %}
+    {% set active_count = subscriptions | selectattr("status", "equalto", "active") | list | length %}
+
+    <div class="summary">
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                کل اشتراک‌ها
+            </div>
+
+            <div class="summary-value">
+                {{ subscriptions|length }}
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                در انتظار بررسی
+            </div>
+
+            <div class="summary-value pending">
+                {{ pending_count }}
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                اشتراک‌های فعال
+            </div>
+
+            <div class="summary-value active">
+                {{ active_count }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         Subscriptions
+    ========================= -->
+
+    <div class="table-card">
+
+        {% if subscriptions %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            کاربر
+                        </th>
+
+                        <th>
+                            ایمیل
+                        </th>
+
+                        <th>
+                            پلن
+                        </th>
+
+                        <th>
+                            مدت
+                        </th>
+
+                        <th>
+                            مبلغ
+                        </th>
+
+                        <th>
+                            وضعیت
+                        </th>
+
+						<th>
+							تاریخ ثبت
+						</th>
+
+						<th>
+							رسید
+						</th>
+
+						<th>
+							عملیات
+						</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for subscription in subscriptions %}
+
+                        <tr>
+
+                            <!-- User -->
+
+                            <td class="user-cell">
+
+                                <span class="name">
+
+                                    {{ subscription.user.first_name }}
+                                    {{ subscription.user.last_name }}
+
+                                </span>
+
+                                <span class="user-id">
+
+                                    شناسه کاربر:
+                                    {{ subscription.user.id }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- Email -->
+
+                            <td>
+
+                                <span class="email">
+
+                                    {{ subscription.user.email }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- Plan -->
+
+                            <td>
+
+                                <span class="plan">
+
+                                    {{ subscription.plan.name }}
+
+                                </span>
+
+                            </td>
+
+
+                            <!-- Duration -->
+
+                            <td>
+
+                                {% if subscription.plan_option %}
+
+                                    <span class="duration">
+
+                                        {{ subscription.plan_option.duration_days }}
+                                        روز
+
+                                    </span>
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Price -->
+
+                            <td>
+
+                                {% if subscription.plan_option %}
+
+                                    {% if subscription.plan_option.price == 0 %}
+
+                                        <span class="price free">
+                                            رایگان
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="price">
+
+                                            {{ "{:,}".format(subscription.plan_option.price) }}
+
+                                            تومان
+
+                                        </span>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    —
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                {% if subscription.status == "pending_review" %}
+
+                                    <span class="status status-pending">
+                                        در انتظار بررسی
+                                    </span>
+
+                                {% elif subscription.status == "active" %}
+
+                                    <span class="status status-active">
+                                        فعال
+                                    </span>
+
+                                {% elif subscription.status == "pending_payment" %}
+
+                                    <span class="status status-default">
+                                        در انتظار پرداخت
+                                    </span>
+
+                                {% elif subscription.status == "rejected" %}
+
+                                    <span class="status status-inactive">
+                                        رد شده
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status status-inactive">
+                                        {{ subscription.status }}
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- Date -->
+
+                          <!-- Date -->
+
+							<td>
+
+								{{ subscription_dates.get(subscription.id, "—") }}
+
+							</td>
+
+						<!-- Receipt -->
+
+						<td>
+
+							{% if subscription.payment_receipt %}
+
+								<a
+									class="button button-light receipt-button"
+									href="{{ url_for(
+										'admin.subscription_receipt',
+										subscription_id=subscription.id
+									) }}"
+									target="_blank"
+								>
+									👁 مشاهده
+								</a>
+
+							{% else %}
+
+								<span class="status status-default">
+									بدون رسید
+								</span>
+
+							{% endif %}
+
+						</td>
+ <!-- Actions -->
+
+<td>
+
+    <div class="actions">
+
+        {% if subscription.status == "pending_review" %}
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'admin.approve_subscription',
+                    subscription_id=subscription.id
+                ) }}"
+                class="approval-form"
+            >
+
+                <input
+                    type="text"
+                    name="admin_message"
+                    class="admin-message-input"
+                    placeholder="پیام اختیاری..."
+                >
+
+                <button
+                    type="submit"
+                    class="button button-success"
+                >
+                    ✓ تأیید
+                </button>
+
+            </form>
+
+
+            <form
+                method="POST"
+                action="{{ url_for(
+                    'admin.reject_subscription',
+                    subscription_id=subscription.id
+                ) }}"
+                class="reject-form"
+            >
+
+                <input
+                    type="text"
+                    name="admin_message"
+                    class="admin-message-input"
+                    placeholder="دلیل رد رسید..."
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="button button-danger"
+                >
+                    × رد رسید
+                </button>
+
+            </form>
+
+        {% else %}
+
+            —
+
+        {% endif %}
+
+    </div>
+
+</td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    💳
+                </div>
+
+                <h2>
+                    هنوز درخواست اشتراکی وجود ندارد
+                </h2>
+
+                <p>
+                    در حال حاضر هیچ درخواست اشتراک در سیستم ثبت نشده است.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+</main>
+
+
+<!-- =========================
+     Auto Hide Flash Messages
+========================= -->
+
+<script>
+
+    setTimeout(function () {
+
+        const messages = document.getElementById("flash-messages");
+
+        if (!messages) {
+            return;
+        }
+
+        messages.querySelectorAll(".message").forEach(function (message) {
+
+            message.classList.add("message-hide");
+
+        });
+
+        setTimeout(function () {
+
+            messages.remove();
+
+        }, 500);
+
+    }, 3000);
+
+</script>
+
+
+</body>
+
+</html>
+ 

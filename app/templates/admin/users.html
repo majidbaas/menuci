@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+ 
+<title>مدیریت کاربران - MenuCi</title>
+
+<style>
+    @font-face {
+        font-family: Vazirmatn;
+        src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background:
+            radial-gradient(circle at top right, rgba(17, 37, 87, .08), transparent 30%),
+            #f5f7fb;
+        font-family: Vazirmatn, sans-serif;
+        color: #222;
+    }
+
+    .container {
+        width: 95%;
+        max-width: 1500px;
+        margin: 35px auto 50px;
+    }
+
+    /* Header */
+    .header {
+        background: linear-gradient(135deg, #112557, #1b397d);
+        color: white;
+        padding: 28px 32px;
+        border-radius: 20px;
+        margin-bottom: 24px;
+        box-shadow: 0 12px 30px rgba(17, 37, 87, .18);
+    }
+
+    .header h1 {
+        margin: 0 0 8px;
+        font-size: 26px;
+    }
+
+    .header p {
+        margin: 0;
+        opacity: .85;
+        font-size: 14px;
+    }
+
+    .top-link {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 18px;
+        padding: 8px 14px;
+        border-radius: 9px;
+        color: white;
+        text-decoration: none;
+        background: rgba(255, 255, 255, .12);
+        transition: .2s;
+        font-size: 13px;
+    }
+
+    .top-link:hover {
+        background: rgba(255, 255, 255, .2);
+    }
+
+    /* Flash */
+    .flash {
+        padding: 13px 18px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        background: #e8f7ed;
+        color: #176b36;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .04);
+        font-size: 13px;
+        animation: slideIn .25s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Summary */
+    .summary {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .summary-card {
+        background: white;
+        border-radius: 16px;
+        padding: 18px 20px;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, .05);
+        border: 1px solid #edf0f5;
+    }
+
+    .summary-title {
+        color: #777;
+        font-size: 13px;
+        margin-bottom: 7px;
+    }
+
+    .summary-value {
+        color: #112557;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    /* Table */
+    .table-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, .06);
+        overflow-x: auto;
+        border: 1px solid #edf0f5;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        min-width: 1100px;
+    }
+
+    th {
+        background: #f1f4f9;
+        color: #333;
+        font-weight: bold;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    th:first-child {
+        border-radius: 0 10px 10px 0;
+    }
+
+    th:last-child {
+        border-radius: 10px 0 0 10px;
+    }
+
+    th,
+    td {
+        padding: 15px 12px;
+        border-bottom: 1px solid #e9edf3;
+        text-align: right;
+        vertical-align: middle;
+    }
+
+    td {
+        font-size: 13px;
+    }
+
+    tbody tr {
+        transition: .2s;
+    }
+
+    tbody tr:hover td {
+        background: #fafbfe;
+    }
+
+    tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* User */
+    .user-name {
+        font-weight: bold;
+        color: #112557;
+        white-space: nowrap;
+    }
+
+    .email {
+        direction: ltr;
+        text-align: right;
+        color: #666;
+        font-size: 12px;
+    }
+
+    /* Business */
+    .business-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        min-width: 170px;
+    }
+
+    .business-list li {
+        margin-bottom: 7px;
+        line-height: 1.8;
+    }
+
+    .business-list li:last-child {
+        margin-bottom: 0;
+    }
+
+    .business-active {
+        display: inline-block;
+        margin-right: 5px;
+        color: #17743a;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .business-archived {
+        display: inline-block;
+        margin-right: 5px;
+        color: #a52323;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    /* Badges */
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 11px;
+        border-radius: 20px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .active {
+        background: #e4f7eb;
+        color: #17743a;
+    }
+
+    .inactive {
+        background: #fce8e8;
+        color: #a52323;
+    }
+
+    .pending {
+        background: #fff4d6;
+        color: #8a6400;
+    }
+
+    .none {
+        background: #eeeeee;
+        color: #666;
+    }
+
+    /* Dates */
+    .date {
+        white-space: nowrap;
+        direction: ltr;
+        text-align: right;
+        color: #555;
+        font-size: 12px;
+    }
+
+    /* Actions */
+    .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        min-width: 245px;
+    }
+
+    .actions form {
+        margin: 0;
+    }
+
+    .btn {
+        border: none;
+        border-radius: 8px;
+        padding: 8px 11px;
+        cursor: pointer;
+        text-decoration: none;
+        font-family: inherit;
+        font-size: 11px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: .2s;
+        white-space: nowrap;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .btn-edit {
+        background: #112557;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background: #1b397d;
+    }
+
+    .btn-active {
+        background: #dff3e6;
+        color: #176b36;
+    }
+
+    .btn-active:hover {
+        background: #ccebd8;
+    }
+
+    .btn-grace {
+        background: #fff0cc;
+        color: #8a6400;
+    }
+
+    .btn-grace:hover {
+        background: #ffe8ad;
+    }
+
+    .btn-archive {
+        background: #fbe0e0;
+        color: #9c2020;
+    }
+
+    .btn-archive:hover {
+        background: #f5cccc;
+    }
+
+    /* Empty */
+    .empty {
+        text-align: center;
+        padding: 55px 20px;
+        color: #777;
+    }
+
+    .empty-icon {
+        font-size: 38px;
+        margin-bottom: 10px;
+        opacity: .6;
+    }
+
+    .empty-title {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .empty-text {
+        font-size: 13px;
+        color: #888;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+        .container {
+            width: 92%;
+            margin-top: 20px;
+        }
+
+        .header {
+            padding: 22px;
+            border-radius: 16px;
+        }
+
+        .header h1 {
+            font-size: 21px;
+        }
+
+        .summary {
+            grid-template-columns: 1fr;
+        }
+
+        .table-card {
+            padding: 12px;
+            border-radius: 16px;
+        }
+    }
+</style>
+ 
+
+</head>
+
+<body>
+
+<div class="container">
+ 
+<!-- Header -->
+<div class="header">
+
+    <h1>
+        مدیریت کاربران و اشتراک‌ها
+    </h1>
+
+    <p>
+        مدیریت اطلاعات کاربران، اشتراک‌ها و وضعیت کسب‌وکارها
+    </p>
+
+    <a
+        href="{{ url_for('admin.index') }}"
+        class="top-link"
+    >
+        ← بازگشت به پنل مدیریت
+    </a>
+
+</div>
+
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        {% for category, message in messages %}
+
+            <div class="flash">
+                {{ message }}
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+{% endwith %}
+
+
+<!-- Summary -->
+{% set total_users = user_data|length %}
+{% set active_users = namespace(count=0) %}
+{% set pending_users = namespace(count=0) %}
+
+{% for item in user_data %}
+
+    {% if item.subscription %}
+
+        {% if item.subscription.status == "active" and item.subscription.is_active %}
+            {% set active_users.count = active_users.count + 1 %}
+        {% endif %}
+
+        {% if item.subscription.status in ["pending_payment", "pending_review"] %}
+            {% set pending_users.count = pending_users.count + 1 %}
+        {% endif %}
+
+    {% endif %}
+
+{% endfor %}
+
+
+<div class="summary">
+
+    <div class="summary-card">
+        <div class="summary-title">
+            تعداد کاربران
+        </div>
+
+        <div class="summary-value">
+            {{ total_users }}
+        </div>
+    </div>
+
+
+    <div class="summary-card">
+        <div class="summary-title">
+            اشتراک‌های فعال
+        </div>
+
+        <div class="summary-value">
+            {{ active_users.count }}
+        </div>
+    </div>
+
+
+    <div class="summary-card">
+        <div class="summary-title">
+            در انتظار بررسی
+        </div>
+
+        <div class="summary-value">
+            {{ pending_users.count }}
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Users Table -->
+<div class="table-card">
+
+    {% if user_data %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>کاربر</th>
+                    <th>ایمیل</th>
+                    <th>کسب‌وکار</th>
+                    <th>پلن</th>
+                    <th>تاریخ شروع</th>
+                    <th>تاریخ پایان</th>
+                    <th>وضعیت</th>
+                    <th>عملیات</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+            {% for item in user_data %}
+
+                {% set user = item.user %}
+                {% set subscription = item.subscription %}
+
+                <tr>
+
+                    <!-- User -->
+                    <td>
+                        <div class="user-name">
+                            {{ user.first_name }}
+                            {{ user.last_name }}
+                        </div>
+                    </td>
+
+
+                    <!-- Email -->
+                    <td>
+                        <div class="email">
+                            {{ user.email }}
+                        </div>
+                    </td>
+
+
+                    <!-- Businesses -->
+                    <td>
+
+                        {% if item.businesses %}
+
+                            <ul class="business-list">
+
+                                {% for business in item.businesses %}
+
+<li>
+
+    <div>
+        {{ business.name }}
+
+        {% if business.is_active %}
+
+            <span class="business-active">
+                ● فعال
+            </span>
+
+        {% else %}
+
+            <span class="business-archived">
+                ● غیرفعال
+            </span>
+
+        {% endif %}
+    </div>
+
+    <form
+        method="POST"
+        action="{{ url_for(
+            'admin.toggle_business_active',
+            business_id=business.id
+        ) }}"
+        style="margin-top: 6px;"
+    >
+
+        {% if business.is_active %}
+
+            <button
+                type="submit"
+                class="btn btn-archive"
+            >
+                غیرفعال کردن
+            </button>
+
+        {% else %}
+
+            <button
+                type="submit"
+                class="btn btn-active"
+            >
+                فعال کردن
+            </button>
+
+        {% endif %}
+
+    </form>
+
+</li>
+
+                                {% endfor %}
+
+                            </ul>
+
+                        {% else %}
+
+                            <span class="badge none">
+                                بدون کسب‌وکار
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    {% if subscription %}
+
+                        <!-- Plan -->
+                        <td>
+                            <span class="badge none">
+                                {{ subscription.plan.name }}
+                            </span>
+                        </td>
+
+
+                        <!-- Start Date -->
+                        <td>
+                            <div class="date">
+                                {{ subscription.start_date.strftime('%Y/%m/%d %H:%M') }}
+                            </div>
+                        </td>
+
+
+                        <!-- End Date -->
+                        <td>
+                            <div class="date">
+                                {{ subscription.end_date.strftime('%Y/%m/%d %H:%M') }}
+                            </div>
+                        </td>
+
+
+                        <!-- Status -->
+                        <td>
+
+                            {% if subscription.status == "active" %}
+
+                                {% if subscription.is_active %}
+
+                                    <span class="badge active">
+                                        ● فعال
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge inactive">
+                                        ● غیرفعال
+                                    </span>
+
+                                {% endif %}
+
+
+                            {% elif subscription.status in ["pending_payment", "pending_review"] %}
+
+                                <span class="badge pending">
+                                    ● در انتظار بررسی
+                                </span>
+
+
+                            {% elif subscription.status == "rejected" %}
+
+                                <span class="badge inactive">
+                                    ● رد شده
+                                </span>
+
+
+                            {% else %}
+
+                                <span class="badge none">
+                                    {{ subscription.status }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- Actions -->
+                        <td>
+
+                            <div class="actions">
+<form
+    method="POST"
+    action="{{ url_for(
+        'admin.toggle_user_active',
+        user_id=user.id
+    ) }}"
+>
+    {% if user.is_active %}
+
+        <button
+            type="submit"
+            class="btn btn-archive"
+            onclick="return confirm('آیا مطمئن هستید که می‌خواهید این کاربر را آرشیو کنید؟');"
+        >
+            آرشیو کاربر
+        </button>
+
+    {% else %}
+
+        <button
+            type="submit"
+            class="btn btn-active"
+        >
+            فعال کردن کاربر
+        </button>
+
+    {% endif %}
+</form>
+
+
+<form
+    method="POST"
+    action="{{ url_for(
+        'admin.toggle_user_admin',
+        user_id=user.id
+    ) }}"
+>
+    {% if user.is_admin %}
+
+        <button
+            type="submit"
+            class="btn btn-grace"
+            onclick="return confirm('آیا می‌خواهید دسترسی ادمین این کاربر حذف شود؟');"
+        >
+            حذف ادمین
+        </button>
+
+    {% else %}
+
+        <button
+            type="submit"
+            class="btn btn-edit"
+            onclick="return confirm('آیا می‌خواهید این کاربر را ادمین کنید؟');"
+        >
+            ادمین کردن
+        </button>
+
+    {% endif %}
+</form>
+                                <a
+                                    href="{{ url_for(
+                                        'admin.edit_subscription',
+                                        subscription_id=subscription.id
+                                    ) }}"
+                                    class="btn btn-edit"
+                                >
+                                    ویرایش
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.test_subscription_state',
+                                        subscription_id=subscription.id,
+                                        state='active'
+                                    ) }}"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-active"
+                                    >
+                                        تست فعال
+                                    </button>
+                                </form>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.test_subscription_state',
+                                        subscription_id=subscription.id,
+                                        state='grace'
+                                    ) }}"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-grace"
+                                    >
+                                        تست مهلت
+                                    </button>
+                                </form>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for(
+                                        'admin.test_subscription_state',
+                                        subscription_id=subscription.id,
+                                        state='archive'
+                                    ) }}"
+                                >
+                                    <button
+                                        type="submit"
+                                        class="btn btn-archive"
+                                    >
+                                        تست آرشیو
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </td>
+
+
+                    {% else %}
+
+                        <td colspan="5">
+
+                            <span class="badge none">
+                                اشتراکی وجود ندارد
+                            </span>
+
+                        </td>
+
+                    {% endif %}
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    {% else %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                👤
+            </div>
+
+            <div class="empty-title">
+                هنوز کاربری ثبت نشده است.
+            </div>
+
+            <div class="empty-text">
+                پس از ثبت‌نام کاربران، اطلاعات آن‌ها در این قسمت نمایش داده می‌شود.
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+ 
+
+</div>
+
+<script>
+    setTimeout(function () {
+        const messages = document.querySelectorAll(".flash");
+
+        messages.forEach(function (message) {
+            message.style.transition = "opacity .4s ease";
+            message.style.opacity = "0";
+
+            setTimeout(function () {
+                message.remove();
+            }, 400);
+        });
+
+    }, 3000);
+</script>
+
+</body>
+</html>

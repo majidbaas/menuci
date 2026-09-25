@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>پنل مدیریت | MenuCi</title>
+
+
+    <style>
+
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            background: #f5f6f8;
+            font-family: "Vazirmatn", sans-serif;
+            color: #222;
+        }
+
+
+        /* =========================
+           Header
+        ========================= */
+
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px 30px;
+        }
+
+
+        .header-inner {
+            max-width: 1250px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+            color: #112557;
+        }
+
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            font-size: 14px;
+        }
+
+
+        .header-left a {
+            color: #112557;
+            text-decoration: none;
+
+            transition: 0.2s;
+        }
+
+
+        .header-left a:hover {
+            color: #3158c9;
+        }
+
+
+        .logout {
+            color: #b42318 !important;
+        }
+
+
+        /* =========================
+           Main
+        ========================= */
+
+        .container {
+            max-width: 1250px;
+
+            margin: 30px auto;
+
+            padding: 0 20px;
+        }
+
+
+        .page-title {
+            margin-bottom: 20px;
+        }
+
+
+        .page-title h1 {
+            margin: 0 0 6px;
+
+            font-size: 26px;
+
+            color: #112557;
+        }
+
+
+        .page-title p {
+            margin: 0;
+
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           Welcome
+        ========================= */
+
+        .welcome {
+            margin-bottom: 20px;
+
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 15px;
+
+            padding: 18px 20px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.035);
+        }
+
+
+        .welcome h2 {
+            margin: 0 0 5px;
+
+            font-size: 18px;
+
+            color: #112557;
+        }
+
+
+        .welcome p {
+            margin: 0;
+
+            color: #666;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           Admin Cards
+        ========================= */
+
+        .admin-grid {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 16px;
+        }
+
+
+        .card {
+            background: #ffffff;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 14px;
+
+            box-shadow:
+                0 3px 12px rgba(0, 0, 0, 0.035);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+        }
+
+
+        .card:hover {
+            transform: translateY(-2px);
+
+            border-color: #d9deeb;
+
+            box-shadow:
+                0 8px 20px rgba(17, 37, 87, 0.07);
+        }
+
+
+        /* عنوان + آیکون */
+
+        .card-title {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #eef2ff;
+
+            color: #112557;
+
+            border-radius: 10px;
+
+            font-size: 18px;
+        }
+
+
+        .card h2 {
+            margin: 0;
+
+            font-size: 16px;
+
+            color: #112557;
+        }
+
+
+        .card p {
+            margin: 0 0 13px;
+
+            color: #666;
+
+            font-size: 12.5px;
+
+            line-height: 1.8;
+
+            min-height: 50px;
+        }
+
+
+        /* =========================
+           Counter
+        ========================= */
+
+        .card-counter {
+            margin-bottom: 13px;
+
+            font-size: 12px;
+
+            color: #b45309;
+
+            font-weight: bold;
+
+            min-height: 18px;
+        }
+
+
+        .card-counter.zero {
+            color: #64748b;
+        }
+
+
+        /* =========================
+           Buttons
+        ========================= */
+
+        .button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 8px 12px;
+
+            border-radius: 8px;
+
+            background: #112557;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        .button:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 5px 12px rgba(17, 37, 87, 0.14);
+        }
+
+
+        .button-light {
+            background: #eeeeef;
+
+            color: #333;
+        }
+
+
+        .button-light:hover {
+            background: #e5e7eb;
+
+            box-shadow: none;
+        }
+
+
+        .button-payment {
+            background: #15966b;
+        }
+
+
+        .button-payment:hover {
+            background: #117c59;
+        }
+
+
+        /* =========================
+           Responsive
+        ========================= */
+
+        @media (max-width: 1050px) {
+
+            .admin-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .admin-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 15px 20px;
+            }
+
+
+            .header-inner {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .header-left {
+                flex-wrap: wrap;
+
+                gap: 12px;
+            }
+
+
+            .container {
+                margin: 25px auto;
+            }
+
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+
+
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .card p {
+                min-height: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     Header
+========================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div class="brand">
+            📱 MenuCi | پنل مدیریت
+        </div>
+
+
+        <div class="header-left">
+
+            <span>
+                {{ current_user.email }}
+            </span>
+
+
+            <a href="{{ url_for('dashboard.index') }}">
+                داشبورد
+            </a>
+
+
+            <a href="{{ url_for('public.home') }}">
+                صفحه اصلی
+            </a>
+
+
+            <a
+                class="logout"
+                href="{{ url_for('auth.logout') }}"
+            >
+                خروج
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     Main
+========================= -->
+
+<main class="container">
+
+
+    <div class="page-title">
+
+        <h1>
+            پنل مدیریت
+        </h1>
+
+        <p>
+            مدیریت بخش‌های مختلف سامانه MenuCi
+        </p>
+
+    </div>
+
+
+    <!-- Welcome -->
+
+    <section class="welcome">
+
+        <h2>
+            سلام {{ current_user.first_name }} 👋
+        </h2>
+
+        <p>
+            به پنل مدیریت MenuCi خوش آمدید.
+            از این بخش می‌توانید تنظیمات و اطلاعات سامانه را مدیریت کنید.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         Admin Cards
+    ========================= -->
+
+    <section class="admin-grid">
+
+
+        <!-- Plans -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div class="card-icon">
+                    💳
+                </div>
+
+                <h2>
+                    مدیریت پلن‌ها
+                </h2>
+
+            </div>
+
+
+            <p>
+                ایجاد، ویرایش و مدیریت پلن‌های اشتراک
+                و تعیین محدودیت‌های هر پلن.
+            </p>
+
+
+            <a
+                class="button"
+                href="{{ url_for('admin.plans') }}"
+            >
+                مدیریت پلن‌ها
+            </a>
+
+        </div>
+
+
+        <!-- Users -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div class="card-icon">
+                    👥
+                </div>
+
+                <h2>
+                    مدیریت کاربران
+                </h2>
+
+            </div>
+
+
+            <p>
+                مشاهده و مدیریت کاربران
+                ثبت‌نام‌شده در MenuCi.
+            </p>
+
+
+            <a
+                class="button"
+                href="{{ url_for('admin.users') }}"
+            >
+                مدیریت کاربران
+            </a>
+
+        </div>
+
+
+        <!-- Subscriptions -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div class="card-icon">
+                    🧾
+                </div>
+
+                <h2>
+                    اشتراک و پرداخت
+                </h2>
+
+            </div>
+
+
+            <p>
+                بررسی درخواست‌های اشتراک،
+                رسیدهای پرداخت و تأیید یا رد آن‌ها.
+            </p>
+
+
+            <div
+                class="card-counter"
+                id="pending-subscriptions-wrapper"
+            >
+
+                🔔
+
+                <span id="pending-subscriptions-count">
+                    {{ pending_subscriptions_count }}
+                </span>
+
+                درخواست در انتظار بررسی
+
+            </div>
+
+
+            <a
+                class="button button-payment"
+                href="{{ url_for('admin.subscriptions') }}"
+            >
+                مدیریت اشتراک‌ها
+            </a>
+
+        </div>
+
+
+        <!-- Password Reset -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div class="card-icon">
+                    🔐
+                </div>
+
+                <h2>
+                    بازیابی رمز عبور
+                </h2>
+
+            </div>
+
+
+            <p>
+                مشاهده درخواست‌های بازیابی رمز
+                و تعیین رمز جدید برای کاربران.
+            </p>
+
+
+            <div
+                class="card-counter"
+                id="pending-password-reset-wrapper"
+            >
+
+                🔔
+
+                <span id="pending-password-reset-count">
+                    {{ pending_password_reset_count }}
+                </span>
+
+                درخواست در انتظار بررسی
+
+            </div>
+
+
+            <a
+                class="button"
+                href="{{ url_for('admin.password_reset_requests') }}"
+            >
+                مشاهده درخواست‌ها
+            </a>
+
+        </div>
+
+
+        <!-- Businesses -->
+
+        <div class="card">
+
+            <div class="card-title">
+
+                <div class="card-icon">
+                    🏪
+                </div>
+
+                <h2>
+                    مدیریت کسب‌وکارها
+                </h2>
+
+            </div>
+
+
+            <p>
+                مشاهده و مدیریت کسب‌وکارهای
+                ثبت‌شده در سامانه.
+            </p>
+
+
+            <a
+                class="button button-light"
+                href="#"
+            >
+                به‌زودی
+            </a>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+<script>
+
+    async function updateNotificationCounts() {
+
+        try {
+
+            const response = await fetch(
+                "{{ url_for('admin.notification_counts') }}"
+            );
+
+            if (!response.ok) {
+                return;
+            }
+
+
+            const data = await response.json();
+
+
+            document.getElementById(
+                "pending-subscriptions-count"
+            ).textContent =
+                data.pending_subscriptions_count;
+
+
+            document.getElementById(
+                "pending-password-reset-count"
+            ).textContent =
+                data.pending_password_reset_count;
+
+        } catch (error) {
+
+            console.error(
+                "خطا در به‌روزرسانی شمارنده‌ها:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+     * یک بار هنگام باز شدن صفحه
+     */
+
+    updateNotificationCounts();
+
+
+    /*
+     * سپس هر ۱۰ ثانیه
+     */
+
+    setInterval(
+        updateNotificationCounts,
+        10000
+    );
+
+</script>
+
+</body>
+
+</html>

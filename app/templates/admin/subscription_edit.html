@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>ویرایش اشتراک - MenuCi</title>
+
+    <style>
+
+        @font-face {
+            font-family: Vazirmatn;
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            font-family: Vazirmatn, sans-serif;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 94%;
+            margin: 40px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.05);
+        }
+
+        h1 {
+            color: #112557;
+            margin-top: 0;
+        }
+
+        .info {
+            background: #f1f4f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d7dce5;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox input {
+            width: auto;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button,
+        .back {
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        button {
+            background: #112557;
+            color: white;
+        }
+
+        .back {
+            background: #eeeeee;
+            color: #333;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>ویرایش اشتراک</h1>
+
+        <div class="info">
+
+            <strong>کاربر:</strong>
+
+            {{ subscription.user.first_name }}
+            {{ subscription.user.last_name }}
+
+            <br>
+
+            <strong>ایمیل:</strong>
+
+            {{ subscription.user.email }}
+
+            <br>
+
+            <strong>پلن:</strong>
+
+            {{ subscription.plan.name }}
+
+        </div>
+
+
+        <form method="POST">
+
+            <div class="field">
+
+                <label>
+                    تاریخ شروع
+                </label>
+
+                <input
+                    type="datetime-local"
+                    name="start_date"
+                    value="{{ subscription.start_date.strftime('%Y-%m-%dT%H:%M') }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    تاریخ پایان
+                </label>
+
+                <input
+                    type="datetime-local"
+                    name="end_date"
+                    value="{{ subscription.end_date.strftime('%Y-%m-%dT%H:%M') }}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    وضعیت اشتراک
+                </label>
+
+                <select name="status">
+
+                    <option
+                        value="active"
+                        {% if subscription.status == "active" %}
+                            selected
+                        {% endif %}
+                    >
+                        فعال
+                    </option>
+
+                    <option
+                        value="pending_payment"
+                        {% if subscription.status == "pending_payment" %}
+                            selected
+                        {% endif %}
+                    >
+                        در انتظار پرداخت
+                    </option>
+
+                    <option
+                        value="pending_review"
+                        {% if subscription.status == "pending_review" %}
+                            selected
+                        {% endif %}
+                    >
+                        در انتظار بررسی
+                    </option>
+
+                    <option
+                        value="rejected"
+                        {% if subscription.status == "rejected" %}
+                            selected
+                        {% endif %}
+                    >
+                        رد شده
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field checkbox">
+
+                <input
+                    type="checkbox"
+                    name="is_active"
+                    value="1"
+                    id="is_active"
+                    {% if subscription.is_active %}
+                        checked
+                    {% endif %}
+                >
+
+                <label for="is_active">
+                    اشتراک فعال باشد
+                </label>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <button type="submit">
+                    ذخیره تغییرات
+                </button>
+
+                <a
+                    href="{{ url_for('admin.users') }}"
+                    class="back"
+                >
+                    انصراف
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

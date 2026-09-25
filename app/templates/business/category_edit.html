@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ویرایش دسته‌بندی | {{ business.name }}
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+@font-face {
+    font-family: Vazirmatn;
+    src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+}
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Vazirmatn;
+
+            background: #f5f6f8;
+
+            color: #222;
+        }
+
+
+        /* =================================================
+           Header
+        ================================================= */
+
+        .header {
+
+            background: #ffffff;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            padding:
+                18px 30px;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+        }
+
+
+        .brand {
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+
+        .back-header {
+
+            color: #555;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition:
+                color 0.15s;
+        }
+
+
+        .back-header:hover {
+
+            color: #112557;
+        }
+
+
+        /* =================================================
+           Container
+        ================================================= */
+
+        .container {
+
+            max-width: 760px;
+
+            margin:
+                35px auto;
+
+            padding:
+                0 20px;
+        }
+
+
+        /* =================================================
+           Main Card
+        ================================================= */
+
+        .card {
+
+            background: #ffffff;
+
+            border:
+                1px solid #e3e7ef;
+
+            border-radius: 20px;
+
+            padding:
+                30px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(17, 37, 87, 0.07);
+        }
+
+
+        /* =================================================
+           Page Header
+        ================================================= */
+
+        .page-header {
+
+            margin-bottom: 28px;
+
+            padding-bottom: 22px;
+
+            border-bottom:
+                1px solid #edf0f4;
+        }
+
+
+        .page-header h1 {
+
+            margin:
+                0 0 8px;
+
+            font-size: 24px;
+        }
+
+
+        .page-header p {
+
+            margin: 0;
+
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.8;
+        }
+
+
+        .business-name {
+
+            color: #112557;
+
+            font-weight: bold;
+        }
+
+
+        /* =================================================
+           Flash Messages
+        ================================================= */
+
+        .toast-container {
+
+            position: fixed;
+
+            top: 24px;
+
+            right: 24px;
+
+            z-index: 9999;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+            width:
+                min(
+                    380px,
+                    calc(100vw - 32px)
+                );
+        }
+
+
+        .toast-message {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                14px 16px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.10);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            animation:
+                toast-in 0.3s ease;
+        }
+
+
+        .toast-message.success {
+
+            border-right:
+                4px solid #22c55e;
+        }
+
+
+        .toast-message.error {
+
+            border-right:
+                4px solid #ef4444;
+        }
+
+
+        .toast-icon {
+
+            width: 28px;
+
+            height: 28px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            font-weight: bold;
+
+            background: #f1f5f9;
+        }
+
+
+        .toast-message.success
+        .toast-icon {
+
+            color: #16a34a;
+
+            background: #dcfce7;
+        }
+
+
+        .toast-message.error
+        .toast-icon {
+
+            color: #dc2626;
+
+            background: #fee2e2;
+        }
+
+
+        .toast-text {
+
+            flex: 1;
+        }
+
+
+        .toast-close {
+
+            border: none;
+
+            background: transparent;
+
+            color: #94a3b8;
+
+            font-size: 22px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+            padding:
+                2px 4px;
+        }
+
+
+        .toast-close:hover {
+
+            color: #334155;
+        }
+
+
+        @keyframes toast-in {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-10px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* =================================================
+           Form
+        ================================================= */
+
+        .form-group {
+
+            margin-bottom: 22px;
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+
+        .required {
+
+            color: #dc2626;
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            border:
+                1px solid #d9dee7;
+
+            border-radius: 12px;
+
+            padding:
+                13px 14px;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            font-size: 14px;
+
+            color: #222;
+
+            background: #ffffff;
+
+            outline: none;
+
+            transition:
+                border-color 0.15s,
+                box-shadow 0.15s;
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color:
+                #112557;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(17, 37, 87, 0.08);
+        }
+
+
+        textarea {
+
+            min-height: 130px;
+
+            resize: vertical;
+
+            line-height: 1.8;
+        }
+
+
+        .help-text {
+
+            display: block;
+
+            margin-top: 7px;
+
+            color: #8a93a3;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =================================================
+           Buttons
+        ================================================= */
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 30px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid #edf0f4;
+        }
+
+
+        .button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 44px;
+
+            padding:
+                11px 18px;
+
+            border-radius: 11px;
+
+            border: none;
+
+            background: #112557;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-family:
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s,
+                opacity 0.15s,
+                box-shadow 0.15s;
+        }
+
+
+        .button:hover {
+
+            opacity: 0.92;
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 4px 12px
+                rgba(0, 0, 0, 0.10);
+        }
+
+
+        .button-light {
+
+            background: #eef1f5;
+
+            color: #222;
+        }
+
+
+        /* =================================================
+           Mobile
+        ================================================= */
+
+        @media (max-width: 600px) {
+
+            .header {
+
+                padding:
+                    15px;
+            }
+
+
+            .brand {
+
+                font-size: 17px;
+            }
+
+
+            .back-header {
+
+                font-size: 12px;
+            }
+
+
+            .container {
+
+                margin:
+                    20px auto;
+
+                padding:
+                    0 15px;
+            }
+
+
+            .card {
+
+                padding:
+                    22px 18px;
+
+                border-radius:
+                    16px;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 21px;
+            }
+
+
+            .actions {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .actions .button {
+
+                width: 100%;
+            }
+
+
+            .toast-container {
+
+                top: 14px;
+
+                right: 16px;
+
+                left: 16px;
+
+                width: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+     Header
+================================================= -->
+
+<header class="header">
+
+    <div class="brand">
+
+        📱 منوی دیجیتال
+
+    </div>
+
+
+    <a
+        class="back-header"
+        href="{{ url_for(
+            'business.categories',
+            business_id=business.id
+        ) }}"
+    >
+
+        ← بازگشت به دسته‌بندی‌ها
+
+    </a>
+
+</header>
+
+
+<!-- =================================================
+     Main
+================================================= -->
+
+<main class="container">
+
+
+    <!-- =================================================
+         Flash Messages
+    ================================================= -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            <div class="toast-container">
+
+                {% for category, message in messages %}
+
+                    <div
+                        class="toast-message {{ category }}"
+                        role="alert"
+                    >
+
+                        <span class="toast-icon">
+
+                            {% if category == "success" %}
+
+                                ✓
+
+                            {% elif category == "error" %}
+
+                                !
+
+                            {% else %}
+
+                                i
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <span class="toast-text">
+
+                            {{ message }}
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            class="toast-close"
+                            onclick="this.parentElement.remove()"
+                            aria-label="بستن"
+                        >
+
+                            ×
+
+                        </button>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =================================================
+         Card
+    ================================================= -->
+
+    <div class="card">
+
+
+        <div class="page-header">
+
+            <h1>
+
+                ✏️ ویرایش دسته‌بندی
+
+            </h1>
+
+
+            <p>
+
+                اطلاعات دسته‌بندی موردنظر را برای
+                <span class="business-name">
+                    {{ business.name }}
+                </span>
+                ویرایش کنید.
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             Form
+        ================================================= -->
+
+        <form method="POST">
+
+
+            <!-- نام -->
+
+            <div class="form-group">
+
+                <label for="name">
+
+                    نام دسته‌بندی
+
+                    <span class="required">
+                        *
+                    </span>
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ category.name }}"
+                    placeholder="مثلاً پیتزا، نوشیدنی، دسر..."
+                    required
+                    autofocus
+                >
+
+            </div>
+
+
+            <!-- توضیحات -->
+
+            <div class="form-group">
+
+                <label for="description">
+
+                    توضیحات
+
+                </label>
+
+
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="توضیح کوتاهی درباره این دسته‌بندی بنویسید..."
+                >{{ category.description or "" }}</textarea>
+
+
+                <small class="help-text">
+
+                    این توضیحات در صورت استفاده می‌تواند برای
+                    معرفی دسته‌بندی نمایش داده شود.
+
+                </small>
+
+            </div>
+
+
+            <!-- ترتیب -->
+
+            <div class="form-group">
+
+                <label for="sort_order">
+
+                    ترتیب نمایش
+
+                </label>
+
+
+                <input
+                    type="number"
+                    id="sort_order"
+                    name="sort_order"
+                    value="{{ category.sort_order }}"
+                    min="0"
+                >
+
+
+                <small class="help-text">
+
+                    عدد کمتر یعنی نمایش زودتر در لیست دسته‌بندی‌ها.
+
+                </small>
+
+            </div>
+
+
+            <!-- دکمه‌ها -->
+
+            <div class="actions">
+
+                <button
+                    type="submit"
+                    class="button"
+                >
+
+                    💾 ذخیره تغییرات
+
+                </button>
+
+
+                <a
+                    class="button button-light"
+                    href="{{ url_for(
+                        'business.categories',
+                        business_id=business.id
+                    ) }}"
+                >
+
+                    انصراف
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</main>
+
+
+<!-- =================================================
+     Toast JavaScript
+================================================= -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const toasts =
+                document.querySelectorAll(
+                    ".toast-message"
+                );
+
+
+            toasts.forEach(
+                function (toast) {
+
+                    setTimeout(
+                        function () {
+
+                            toast.style.transition =
+                                "opacity 0.3s ease, transform 0.3s ease";
+
+                            toast.style.opacity = "0";
+
+                            toast.style.transform =
+                                "translateY(-10px)";
+
+
+                            setTimeout(
+                                function () {
+
+                                    toast.remove();
+
+                                },
+                                300
+                            );
+
+                        },
+                        3500
+                    );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

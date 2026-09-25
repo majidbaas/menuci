@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ form_title or "افزودن پلن" }} | MenuCi
+    </title>
+
+    <style>
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f6f8;
+            font-family: "Vazirmatn", sans-serif;
+            color: #222;
+        }
+
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 30px;
+        }
+
+        .header-inner {
+            max-width: 1250px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+            color: #112557;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 14px;
+        }
+
+        .header-left a {
+            color: #112557;
+            text-decoration: none;
+        }
+
+        .logout {
+            color: #b42318 !important;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+            color: #112557;
+        }
+
+        .page-title p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #112557;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d9dce1;
+            border-radius: 10px;
+            background: #ffffff;
+            font-family: "Vazirmatn", sans-serif;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #112557;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .help {
+            margin-top: 6px;
+            color: #777;
+            font-size: 12px;
+        }
+
+        .limits-title {
+            margin: 30px 0 18px;
+            color: #112557;
+            font-size: 18px;
+        }
+
+        .limits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+            padding: 11px 17px;
+            border: none;
+            border-radius: 10px;
+            background: #112557;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: "Vazirmatn", sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .button-light {
+            background: #eeeeef;
+            color: #333;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .message-error {
+            background: #fbeaea;
+            color: #b42318;
+        }
+
+        .message-success {
+            background: #e8f7ef;
+            color: #16834b;
+        }
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-left {
+                flex-wrap: wrap;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .limits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <div class="brand">
+                📱 MenuCi | پنل مدیریت
+            </div>
+
+            <div class="header-left">
+
+                <span>
+                    {{ current_user.email }}
+                </span>
+
+                <a href="{{ url_for('dashboard.index') }}">
+                    داشبورد
+                </a>
+
+                <a href="{{ url_for('public.home') }}">
+                    صفحه اصلی
+                </a>
+
+                <a class="logout" href="{{ url_for('auth.logout') }}">
+                    خروج
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <div class="page-title">
+
+            <h1>
+                {{ form_title or "افزودن پلن" }}
+            </h1>
+
+            <p>
+                {% if plan %}
+                    ویرایش اطلاعات پلن {{ plan.name }}
+                {% else %}
+                    ایجاد یک پلن اشتراک جدید برای MenuCi
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <div class="messages">
+
+                    {% for category, message in messages %}
+
+                        <div class="message message-{{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% endif %}
+
+        {% endwith %}
+
+
+        <div class="form-card">
+
+            <form method="POST">
+
+                <div class="form-group">
+
+                    <label for="name">
+                        نام پلن
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ name if name is defined else (plan.name if plan else '') }}"
+                        placeholder="مثلاً پلن پایه"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="description">
+                        توضیحات
+                    </label>
+
+                    <textarea
+                        id="description"
+                        name="description"
+                        placeholder="توضیح کوتاه درباره این پلن"
+                    >{{ description if description is defined else (plan.description if plan else '') }}</textarea>
+
+                </div>
+
+
+         
+<div class="form-group">
+
+    <label>
+        قیمت‌گذاری اشتراک
+    </label>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;">
+
+        <div>
+            <label for="price_30">
+                ۱ ماهه
+            </label>
+
+<input
+    type="text"
+    id="price_30"
+    name="price_30"
+    inputmode="numeric"
+    autocomplete="off"
+    value="{% for option in plan_options|default([]) %}{% if option.duration_days == 30 %}{{ "{:,}".format(option.price) }}{% endif %}{% endfor %}"
+    placeholder="مثلاً 500,000"
+>
+        </div>
+
+        <div>
+            <label for="price_90">
+                ۳ ماهه
+            </label>
+
+<input
+    type="text"
+    id="price_90"
+    name="price_90"
+    inputmode="numeric"
+    autocomplete="off"
+    value="{% for option in plan_options|default([]) %}{% if option.duration_days == 90 %}{{ "{:,}".format(option.price) }}{% endif %}{% endfor %}"
+    placeholder="مثلاً 1,350,000"
+>
+        </div>
+
+        <div>
+            <label for="price_180">
+                ۶ ماهه
+            </label>
+
+<input
+    type="text"
+    id="price_180"
+    name="price_180"
+    inputmode="numeric"
+    autocomplete="off"
+    value="{% for option in plan_options|default([]) %}{% if option.duration_days == 180 %}{{ "{:,}".format(option.price) }}{% endif %}{% endfor %}"
+    placeholder="مثلاً 2,400,000"
+>
+        </div>
+
+    </div>
+
+    <div class="help">
+        قیمت هر دوره را به تومان وارد کنید.
+    </div>
+
+</div>
+                </div>
+
+
+                <h2 class="limits-title">
+                    محدودیت‌های پلن
+                </h2>
+
+
+                <div class="limits-grid">
+
+                    <div class="form-group">
+
+                        <label for="max_businesses">
+                            حداکثر کسب‌وکار
+                        </label>
+
+                        <input
+                            type="number"
+                            id="max_businesses"
+                            name="max_businesses"
+                            value="{{ max_businesses if max_businesses is defined else (plan.max_businesses if plan else '') }}"
+                            min="1"
+                            placeholder="مثلاً 1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="max_categories">
+                            حداکثر دسته‌بندی
+                        </label>
+
+                        <input
+                            type="number"
+                            id="max_categories"
+                            name="max_categories"
+                            value="{{ max_categories if max_categories is defined else (plan.max_categories if plan else '') }}"
+                            min="1"
+                            placeholder="مثلاً 10"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="max_products">
+                            حداکثر محصول
+                        </label>
+
+                        <input
+                            type="number"
+                            id="max_products"
+                            name="max_products"
+                            value="{{ max_products if max_products is defined else (plan.max_products if plan else '') }}"
+                            min="1"
+                            placeholder="مثلاً 50"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="actions">
+
+                    <button
+                        type="submit"
+                        class="button"
+                    >
+                        {% if plan %}
+                            ذخیره تغییرات
+                        {% else %}
+                            ایجاد پلن
+                        {% endif %}
+                    </button>
+
+                    <a
+                        class="button button-light"
+                        href="{{ url_for('admin.plans') }}"
+                    >
+                        انصراف
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
+
+<script>
+
+    function formatPrice(value) {
+
+        const digits = value
+            .replace(/,/g, "")
+            .replace(/\D/g, "");
+
+        if (!digits) {
+            return "";
+        }
+
+        return Number(digits).toLocaleString("en-US");
+    }
+
+
+    function setupPriceInput(input) {
+
+        input.addEventListener("input", function () {
+
+            const cursorPosition = this.selectionStart;
+            const oldValue = this.value;
+
+            this.value = formatPrice(this.value);
+
+            const commaCountBefore = (
+                oldValue
+                .slice(0, cursorPosition)
+                .match(/,/g) || []
+            ).length;
+
+            const commaCountAfter = (
+                this.value
+                .slice(0, cursorPosition)
+                .match(/,/g) || []
+            ).length;
+
+            const newCursorPosition =
+                cursorPosition +
+                (commaCountAfter - commaCountBefore);
+
+            this.setSelectionRange(
+                newCursorPosition,
+                newCursorPosition
+            );
+
+        });
+
+    }
+
+
+    const priceInputs = [
+        document.getElementById("price"),
+        document.getElementById("price_30"),
+        document.getElementById("price_90"),
+        document.getElementById("price_180")
+    ];
+
+
+    priceInputs.forEach(function (input) {
+
+        if (input) {
+            setupPriceInput(input);
+        }
+
+    });
+
+
+    document.querySelector("form").addEventListener(
+        "submit",
+        function () {
+
+            priceInputs.forEach(function (input) {
+
+                if (input) {
+                    input.value = input.value.replace(/,/g, "");
+                }
+
+            });
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

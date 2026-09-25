@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>{{ business.name }}</title>
+
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            color: #222;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .business-header {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .business-header h1 {
+            margin: 0 0 12px;
+        }
+
+        .description {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .category {
+            margin-bottom: 30px;
+        }
+
+        .category-title {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .product {
+            background: white;
+            padding: 18px;
+            margin-bottom: 12px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.05);
+        }
+
+        .product-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .product-name {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .price {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .product-description {
+            margin-top: 10px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: #777;
+        }
+
+        .contact {
+            margin-top: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- اطلاعات کسب‌وکار -->
+    <div class="business-header">
+
+        <h1>
+            {{ business.name }}
+        </h1>
+
+        {% if business.description %}
+            <div class="description">
+                {{ business.description }}
+            </div>
+        {% endif %}
+
+        {% if business.phone %}
+            <div>
+                📞 {{ business.phone }}
+            </div>
+        {% endif %}
+
+        {% if business.address %}
+            <div>
+                📍 {{ business.address }}
+            </div>
+        {% endif %}
+
+    </div>
+
+
+    <!-- دسته‌بندی‌ها -->
+
+    {% if categories %}
+
+        {% for category in categories %}
+
+            <div class="category">
+
+                <h2 class="category-title">
+                    {{ category.name }}
+                </h2>
+
+                {% if category.description %}
+                    <div class="description">
+                        {{ category.description }}
+                    </div>
+                {% endif %}
+
+
+                {% set category_products = products_by_category.get(category.id, []) %}
+
+                {% if category_products %}
+
+                    {% for product in category_products %}
+
+                        <div class="product">
+
+                            <div class="product-header">
+
+                                <div class="product-name">
+                                    {{ product.name }}
+                                </div>
+
+                                <div class="price">
+                                    {{ product.price }} تومان
+                                </div>
+
+                            </div>
+
+                            {% if product.description %}
+                                <div class="product-description">
+                                    {{ product.description }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty">
+                        محصولی در این دسته‌بندی وجود ندارد.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            هنوز دسته‌بندی‌ای برای این کسب‌وکار ثبت نشده است.
+        </div>
+
+    {% endif %}
+
+
+    <!-- اطلاعات تماس -->
+
+    {% if business.phone or business.address %}
+
+        <div class="contact">
+
+            <h3>
+                اطلاعات تماس
+            </h3>
+
+            {% if business.phone %}
+                <p>
+                    📞 {{ business.phone }}
+                </p>
+            {% endif %}
+
+            {% if business.address %}
+                <p>
+                    📍 {{ business.address }}
+                </p>
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>

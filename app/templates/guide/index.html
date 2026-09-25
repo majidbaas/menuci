@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>آموزش کار با MenuCi</title>
+
+    <style>
+
+        @font-face {
+            font-family: Vazirmatn;
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #f5f7fb;
+            color: #333;
+            font-family: Vazirmatn, sans-serif;
+            line-height: 2;
+        }
+
+        /* ==============================
+           Header
+        ============================== */
+
+        .header {
+            background: #112557;
+            color: white;
+            padding: 32px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           Main
+        ============================== */
+
+        .container {
+            width: 94%;
+            max-width: 1100px;
+            margin: 30px auto 60px;
+        }
+
+        /* ==============================
+           Intro
+        ============================== */
+
+        .intro {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .intro h2 {
+            margin-top: 0;
+            color: #112557;
+            font-size: 21px;
+        }
+
+        .intro p {
+            margin-bottom: 0;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* ==============================
+           Guide Navigation
+        ============================== */
+
+        .guide-nav {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+.guide-nav a {
+    display: block;
+    text-decoration: none;
+    color: #112557;
+    background: #f4f6fa;
+    border-radius: 10px;
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+
+        .guide-nav a:hover {
+            background: #e9edf5;
+            transform: translateY(-1px);
+        }
+
+        /* ==============================
+           Sections
+        ============================== */
+
+        .guide-section {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+
+            scroll-margin-top: 20px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin: 0 0 20px;
+            padding-bottom: 12px;
+
+            border-bottom: 1px solid #e5e8ee;
+
+            color: #112557;
+            font-size: 20px;
+        }
+
+        .section-number {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #112557;
+            color: white;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            flex-shrink: 0;
+        }
+
+        .guide-section h3 {
+            color: #112557;
+            font-size: 16px;
+            margin: 25px 0 8px;
+        }
+
+        .guide-section h3:first-of-type {
+            margin-top: 10px;
+        }
+
+        .guide-section p {
+            font-size: 14px;
+            color: #555;
+            margin: 7px 0;
+        }
+
+        .guide-section ul {
+            margin: 8px 0;
+            padding-right: 22px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .guide-section li {
+            margin-bottom: 5px;
+        }
+
+        /* ==============================
+           Tips
+        ============================== */
+
+        .tip {
+            background: #f5f7fb;
+            border-right: 4px solid #112557;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #444;
+        }
+
+        .tip strong {
+            color: #112557;
+        }
+
+        /* ==============================
+           Steps
+        ============================== */
+
+        .steps {
+            margin-top: 12px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            width: 25px;
+            height: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #112557;
+            color: white;
+
+            border-radius: 50%;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        .step-text {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* ==============================
+           FAQ
+        ============================== */
+
+        .faq-item {
+            border-bottom: 1px solid #e8ebf0;
+            padding: 14px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #112557;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .faq-answer {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* ==============================
+           Footer
+        ============================== */
+
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-top: 35px;
+        }
+/* ==============================
+   Back To Top
+============================== */
+
+.back-to-top {
+    position: fixed;
+
+    bottom: 20px;
+    left: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #112557;
+    color: white;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(10px);
+
+    transition:
+        opacity 0.25s,
+        visibility 0.25s,
+        transform 0.25s;
+
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    opacity: 0.9;
+}
+
+        /* ==============================
+           Mobile
+        ============================== */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 25px 15px;
+            }
+
+            .header h1 {
+                font-size: 23px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 20px;
+            }
+
+            .guide-nav {
+                grid-template-columns: 1fr 1fr;
+                padding: 15px;
+            }
+
+            .guide-nav a {
+                font-size: 12px;
+                padding: 10px 6px;
+            }
+
+            .guide-section {
+                padding: 20px 17px;
+            }
+
+            .section-title {
+                font-size: 17px;
+            }
+
+        }
+
+        @media (max-width: 420px) {
+
+            .guide-nav {
+                grid-template-columns: 1fr;
+            }
+
+        }
+		
+		/* ==============================
+   Back To Dashboard
+============================== */
+
+.header-content {
+    max-width: 1100px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.back-dashboard {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 9px 14px;
+
+    border-radius: 9px;
+
+    background: #112557;
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+.back-dashboard:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+
+/* Mobile */
+
+@media (max-width: 700px) {
+
+    .header-content {
+        flex-direction: column;
+        align-items: stretch;
+
+        text-align: center;
+    }
+
+    .back-dashboard {
+        width: 100%;
+    }
+
+}
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ==============================
+         Header
+    ============================== -->
+
+<header class="header">
+
+    <div class="header-content">
+
+        <div>
+            <h1>آموزش کار با MenuCi</h1>
+
+            <p>
+                راهنمای ساده برای ساخت و مدیریت منوی دیجیتال کسب‌وکار
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('dashboard.index') }}"
+            class="back-dashboard"
+        >
+            ← بازگشت به داشبورد
+        </a>
+
+    </div>
+
+</header>
+
+
+    <main class="container">
+
+        <!-- ==============================
+             Intro
+        ============================== -->
+
+        <section class="intro">
+
+            <h2>از کجا شروع کنم؟</h2>
+
+            <p>
+                اگر تازه با MenuCi آشنا شده‌اید، جای نگرانی نیست.
+                
+            </p>
+			<p>
+این راهنما قدم‌به‌قدم توضیح می‌دهد که چطور حساب خودتان را بسازید،
+                کسب‌وکارتان را ثبت کنید، دسته‌بندی و محصول اضافه کنید،
+                QR Code بگیرید و وضعیت اشتراکتان را مدیریت کنید.
+ </p>           
+		   <p>
+                لازم نیست همه بخش‌ها را یک‌جا بخوانید.
+                از منوی بالای صفحه، همان بخشی را که دنبالش هستید انتخاب کنید
+                و مستقیم به همان قسمت بروید.
+            </p>
+
+        </section>
+
+
+        <!-- ==============================
+             Navigation
+        ============================== -->
+
+        <nav class="guide-nav">
+
+            <a href="#start">
+                شروع کار
+            </a>
+
+            <a href="#business">
+                مدیریت کسب‌وکار
+            </a>
+
+            <a href="#categories">
+                دسته‌بندی‌ها
+            </a>
+
+            <a href="#products">
+                محصولات و منو
+            </a>
+
+            <a href="#qrcode">
+                QR Code
+            </a>
+
+            <a href="#subscription">
+                اشتراک
+            </a>
+
+            <a href="#account">
+                حساب کاربری
+            </a>
+
+            <a href="#password">
+                بازیابی رمز عبور
+            </a>
+
+            <a href="#faq">
+                سوالات متداول
+            </a>
+
+        </nav>
+
+
+        <!-- ==============================
+             1. Start
+        ============================== -->
+
+        <section class="guide-section" id="start">
+
+            <h2 class="section-title">
+                <span class="section-number">۱</span>
+                شروع کار با MenuCi
+            </h2>
+
+            <h3>ثبت‌نام</h3>
+
+            <p>
+                برای شروع کار با MenuCi ابتدا باید یک حساب کاربری داشته باشید.
+                از صفحه ورود، گزینه «ثبت‌نام» را انتخاب کنید و اطلاعات خواسته‌شده
+                را وارد کنید.
+            </p>
+
+            <p>
+                بعد از تکمیل ثبت‌نام، وارد حساب خودتان می‌شوید و می‌توانید
+                اولین کسب‌وکارتان را ایجاد کنید.
+            </p>
+
+
+            <h3>ورود به حساب</h3>
+
+            <p>
+                اگر قبلاً ثبت‌نام کرده‌اید، از صفحه ورود، اطلاعات حساب خود را
+                وارد کنید تا وارد داشبورد شوید.
+            </p>
+
+            <div class="tip">
+                <strong>نکته:</strong>
+                اطلاعات ورودتان را در اختیار دیگران قرار ندهید.
+            </div>
+
+
+            <h3>داشبورد</h3>
+
+            <p>
+                بعد از ورود، داشبورد اصلی حساب خودتان را می‌بینید.
+                بخش‌های مختلف مدیریت کسب‌وکار، محصولات و اشتراک از این قسمت
+                در دسترس هستند.
+            </p>
+
+        </section>
+
+
+        <!-- ==============================
+             2. Business
+        ============================== -->
+
+        <section class="guide-section" id="business">
+
+            <h2 class="section-title">
+                <span class="section-number">۲</span>
+                مدیریت کسب‌وکار
+            </h2>
+
+            <h3>ایجاد کسب‌وکار</h3>
+
+            <p>
+                بعد از ورود به حساب، از قسمت «کسب‌وکارهای من» می‌توانید
+                یک کسب‌وکار جدید ایجاد کنید.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <span class="step-number">۱</span>
+                    <span class="step-text">
+                        وارد بخش «کسب‌وکارهای من» شوید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۲</span>
+                    <span class="step-text">
+                        گزینه «ایجاد کسب‌وکار جدید» را انتخاب کنید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۳</span>
+                    <span class="step-text">
+                        اطلاعات کسب‌وکارتان را وارد کنید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۴</span>
+                    <span class="step-text">
+                        اطلاعات را بررسی و ذخیره کنید.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <h3>ویرایش اطلاعات کسب‌وکار</h3>
+
+            <p>
+                اگر بعداً خواستید اطلاعات کسب‌وکارتان را تغییر دهید،
+                می‌توانید از بخش مدیریت کسب‌وکار وارد صفحه ویرایش شوید.
+            </p>
+
+            <p>
+                نام کسب‌وکار، توضیحات، اطلاعات تماس، لوگو، بنر و سایر
+                اطلاعات قابل ویرایش را می‌توانید از همین قسمت مدیریت کنید.
+            </p>
+
+
+            <h3>تصویر و لوگو</h3>
+
+            <p>
+                بهتر است برای لوگو و تصویر کسب‌وکار از تصاویر واضح و مناسب
+                استفاده کنید تا صفحه عمومی کسب‌وکارتان ظاهر مرتب‌تری داشته باشد.
+            </p>
+
+        </section>
+
+
+        <!-- ==============================
+             3. Categories
+        ============================== -->
+
+        <section class="guide-section" id="categories">
+
+            <h2 class="section-title">
+                <span class="section-number">۳</span>
+                مدیریت دسته‌بندی‌ها
+            </h2>
+
+            <h3>دسته‌بندی چیست؟</h3>
+
+            <p>
+                دسته‌بندی کمک می‌کند محصولات منوی شما مرتب و قابل دسترس باشند.
+                برای مثال یک رستوران می‌تواند دسته‌هایی مثل
+                «غذاها»، «نوشیدنی‌ها» و «دسرها» داشته باشد.
+            </p>
+
+
+            <h3>ایجاد دسته‌بندی</h3>
+
+            <p>
+                وارد مدیریت کسب‌وکار شوید و از بخش دسته‌بندی‌ها،
+                گزینه ایجاد دسته‌بندی جدید را انتخاب کنید.
+            </p>
+
+            <p>
+                نام دسته‌بندی را وارد و آن را ذخیره کنید.
+                بعد از آن می‌توانید هنگام ثبت محصولات،
+                محصول موردنظر را داخل همین دسته قرار دهید.
+            </p>
+
+
+            <h3>ویرایش و حذف دسته‌بندی</h3>
+
+            <p>
+                هر زمان که نیاز داشتید می‌توانید دسته‌بندی‌های قبلی را
+                ویرایش کنید یا در صورت نیاز حذف کنید.
+            </p>
+
+            <div class="tip">
+                <strong>نکته:</strong>
+                قبل از حذف یک دسته‌بندی، محصولات مربوط به آن را بررسی کنید.
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             4. Products
+        ============================== -->
+
+        <section class="guide-section" id="products">
+
+            <h2 class="section-title">
+                <span class="section-number">۴</span>
+                محصولات و منوی دیجیتال
+            </h2>
+
+            <h3>ثبت محصول</h3>
+
+            <p>
+                بعد از ایجاد دسته‌بندی، می‌توانید محصولات منوی خودتان را
+                اضافه کنید.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <span class="step-number">۱</span>
+                    <span class="step-text">
+                        وارد بخش محصولات شوید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۲</span>
+                    <span class="step-text">
+                        گزینه «افزودن محصول» را انتخاب کنید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۳</span>
+                    <span class="step-text">
+                        نام، قیمت، توضیحات و سایر اطلاعات محصول را وارد کنید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۴</span>
+                    <span class="step-text">
+                        دسته‌بندی مناسب را انتخاب کنید.
+                    </span>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">۵</span>
+                    <span class="step-text">
+                        در صورت نیاز تصویر محصول را اضافه کنید و محصول را ذخیره کنید.
+                    </span>
+                </div>
+
+            </div>
+
+
+            <h3>ویرایش محصول</h3>
+
+            <p>
+                اگر قیمت، توضیحات یا تصویر محصول تغییر کرد،
+                نیازی نیست محصول را دوباره بسازید.
+                کافی است وارد بخش مدیریت محصولات شوید و گزینه ویرایش را انتخاب کنید.
+            </p>
+
+
+            <h3>حذف محصول</h3>
+
+            <p>
+                محصولاتی که دیگر ارائه نمی‌کنید را می‌توانید از بخش محصولات حذف کنید.
+            </p>
+
+
+            <div class="tip">
+                <strong>پیشنهاد:</strong>
+                اطلاعات محصولات را هر چند وقت یک‌بار بررسی کنید تا منوی دیجیتال
+                همیشه با منوی واقعی کسب‌وکارتان هماهنگ باشد.
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             5. QR Code
+        ============================== -->
+
+        <section class="guide-section" id="qrcode">
+
+            <h2 class="section-title">
+                <span class="section-number">۵</span>
+                QR Code کسب‌وکار
+            </h2>
+
+            <h3>QR Code چیست؟</h3>
+
+            <p>
+                QR Code همان کدی است که مشتری با دوربین تلفن همراه خود
+                آن را اسکن می‌کند و وارد صفحه کسب‌وکار شما می‌شود.
+            </p>
+
+            <p>
+                به این ترتیب مشتری بدون نیاز به جست‌وجوی نام کسب‌وکار،
+                می‌تواند مستقیماً منوی دیجیتال شما را باز کند.
+            </p>
+
+
+            <h3>دریافت و دانلود QR Code</h3>
+
+            <p>
+                QR Code اختصاصی هر کسب‌وکار از بخش مربوط به QR Code
+                قابل مشاهده و دانلود است.
+            </p>
+
+            <p>
+                بعد از دانلود می‌توانید آن را روی میز، استند،
+                کارت ویزیت، پوستر یا هر محل مناسب دیگری قرار دهید.
+            </p>
+
+
+            <div class="tip">
+                <strong>نکته مهم:</strong>
+                قبل از چاپ تعداد زیادی QR Code، حتماً یک بار آن را با
+                تلفن همراه اسکن کنید و مطمئن شوید صفحه درست باز می‌شود.
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             6. Subscription
+        ============================== -->
+
+        <section class="guide-section" id="subscription">
+
+            <h2 class="section-title">
+                <span class="section-number">۶</span>
+                اشتراک MenuCi
+            </h2>
+
+            <h3>مشاهده وضعیت اشتراک</h3>
+
+			<p>
+				در روزهای پایانی اشتراک، وضعیت انقضا و امکان تمدید یا ارتقای اشتراک
+				در داشبورد به شما اطلاع داده می‌شود تا بتوانید قبل از پایان دوره
+				برای ادامه استفاده از MenuCi اقدام کنید.
+			</p>
+
+            <h3>انتخاب اشتراک</h3>
+
+            <p>
+                اگر نیاز به اشتراک جدید دارید، از بخش اشتراک می‌توانید
+                پلن‌های موجود را مشاهده و گزینه مناسب خودتان را انتخاب کنید.
+            </p>
+
+
+            <h3>ارتقا یا تمدید اشتراک</h3>
+
+            <p>
+                اگر می‌خواهید از امکانات یک پلن دیگر استفاده کنید یا
+                اشتراک خودتان را تمدید کنید، ابتدا پلن موردنظر را انتخاب کنید.
+            </p>
+
+           <p>
+				سپس اطلاعات پرداخت و مبلغ مربوط به گزینه انتخاب‌شده نمایش داده می‌شود.
+				مبلغ را طبق اطلاعات پرداخت اعلام‌شده واریز کنید.
+			</p>
+
+			<p>
+				بعد از واریز، تصویر رسید پرداخت را در همان صفحه بارگذاری کنید
+				تا درخواست شما برای بررسی مدیریت ثبت شود.
+			</p>
+
+
+            <h3>ارسال رسید پرداخت</h3>
+
+            <p>
+                بعد از پرداخت، تصویر رسید را از همان صفحه برای ما ارسال کنید.
+                تصویر باید واضح باشد تا اطلاعات پرداخت قابل بررسی باشد.
+            </p>
+
+            <p>
+                در صورت نیاز می‌توانید توضیحی هم همراه رسید وارد کنید.
+                توضیحات اختیاری است.
+            </p>
+
+
+            <h3>بررسی درخواست</h3>
+
+            <p>
+                بعد از ارسال رسید، درخواست شما در وضعیت
+                «در انتظار بررسی» قرار می‌گیرد.
+            </p>
+
+            <p>
+                بعد از بررسی و تأیید پرداخت توسط مدیریت،
+                اشتراک شما فعال خواهد شد.
+            </p>
+
+
+            <div class="tip">
+                <strong>نکته:</strong>
+                صرفاً وارد شدن به صفحه پرداخت به معنی ثبت درخواست اشتراک نیست.
+                درخواست بعد از ارسال رسید پرداخت ثبت می‌شود.
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             7. Account
+        ============================== -->
+
+        <section class="guide-section" id="account">
+
+            <h2 class="section-title">
+                <span class="section-number">۷</span>
+                مدیریت حساب کاربری
+            </h2>
+
+            <h3>مشاهده حساب کاربری</h3>
+
+            <p>
+                از منوی حساب کاربری در داشبورد می‌توانید اطلاعات مربوط به
+                حساب خودتان را مشاهده کنید.
+            </p>
+
+
+            <h3>تغییر اطلاعات حساب</h3>
+
+			<p>
+				اگر نیاز به تغییر اطلاعات حساب خود دارید،
+				می‌توانید از بخش حساب کاربری اقدام کنید.
+			</p>
+
+            <p>
+                بهتر است اطلاعات حساب را همیشه به‌روز نگه دارید تا در صورت
+                نیاز به پشتیبانی، ارتباط با شما راحت‌تر باشد.
+            </p>
+
+
+            <div class="tip">
+                <strong>نکته:</strong>
+                تغییر اطلاعات حساب، با اطلاعات کسب‌وکار شما متفاوت است.
+                برای تغییر مشخصات خود کسب‌وکار باید از بخش مدیریت کسب‌وکار استفاده کنید.
+            </div>
+
+        </section>
+
+
+<!-- ==============================
+     8. Password Recovery
+============================== -->
+
+<section class="guide-section" id="password">
+
+    <h2 class="section-title">
+        <span class="section-number">۸</span>
+        بازیابی رمز عبور
+    </h2>
+
+    <p>
+        اگر رمز عبور خود را فراموش کرده‌اید، نیازی به ساخت حساب جدید ندارید.
+        می‌توانید از طریق گزینه «فراموشی رمز عبور» در صفحه ورود،
+        درخواست بازیابی حساب خود را ثبت کنید.
+    </p>
+
+
+    <h3>ثبت درخواست بازیابی</h3>
+
+    <div class="steps">
+
+        <div class="step">
+            <span class="step-number">۱</span>
+            <span class="step-text">
+                وارد صفحه ورود MenuCi شوید و گزینه «فراموشی رمز عبور» را انتخاب کنید.
+            </span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">۲</span>
+            <span class="step-text">
+                نام کاربری و شماره موبایلی که هنگام ثبت‌نام برای حساب خود وارد کرده‌اید،
+                وارد کنید.
+            </span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">۳</span>
+            <span class="step-text">
+                درخواست بازیابی را ثبت کنید.
+            </span>
+        </div>
+
+        <div class="step">
+            <span class="step-number">۴</span>
+            <span class="step-text">
+                درخواست شما برای بررسی در پنل مدیریت MenuCi ثبت می‌شود.
+            </span>
+        </div>
+
+    </div>
+
+
+    <h3>بعد از ثبت درخواست چه اتفاقی می‌افتد؟</h3>
+
+    <p>
+        درخواست بازیابی توسط مدیریت بررسی می‌شود.
+        در صورت تأیید، مدیر برای حساب شما یک رمز عبور جدید تعیین می‌کند.
+    </p>
+
+    <p>
+        سپس اطلاعات لازم برای ورود با رمز جدید از طریق پیامک برای شما ارسال می‌شود.
+    </p>
+
+
+    <h3>اگر شماره موبایل یا نام کاربری را اشتباه وارد کنم</h3>
+
+    <p>
+        اطلاعات واردشده باید با اطلاعات حساب شما مطابقت داشته باشد.
+        بنابراین هنگام ثبت درخواست، نام کاربری و شماره موبایل خود را
+        با دقت وارد کنید.
+    </p>
+
+
+    <div class="tip">
+        <strong>نکته امنیتی:</strong>
+        رمز عبور جدید خود را پس از دریافت در اختیار دیگران قرار ندهید
+        و آن را فقط برای ورود به حساب خودتان استفاده کنید.
+    </div>
+
+</section>
+
+        <!-- ==============================
+             9. FAQ
+        ============================== -->
+
+        <section class="guide-section" id="faq">
+
+            <h2 class="section-title">
+                <span class="section-number">۹</span>
+                سوالات متداول
+            </h2>
+
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    چرا کسب‌وکار من در صفحه عمومی نمایش داده نمی‌شود؟
+                </div>
+
+                <div class="faq-answer">
+                    ابتدا اطلاعات کسب‌وکار و وضعیت آن را بررسی کنید.
+                    اگر مشکل ادامه داشت، با پشتیبانی تماس بگیرید.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    آیا می‌توانم اطلاعات کسب‌وکارم را بعداً تغییر بدهم؟
+                </div>
+
+                <div class="faq-answer">
+                    بله. اطلاعات کسب‌وکار از بخش مدیریت کسب‌وکار قابل ویرایش است.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    آیا می‌توانم محصولی را که قبلاً ثبت کرده‌ام ویرایش کنم؟
+                </div>
+
+                <div class="faq-answer">
+                    بله. از بخش محصولات می‌توانید محصول موردنظر را انتخاب
+                    و اطلاعات آن را تغییر دهید.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    اگر اشتراکم تمام شود چه اتفاقی می‌افتد؟
+                </div>
+
+			<div class="faq-answer">
+				بعد از پایان اشتراک، یک دوره مهلت ۱۰ روزه برای کسب‌وکار در نظر گرفته می‌شود.
+				در این مدت امکان مدیریت و ایجاد تغییرات وجود ندارد، اما صفحه عمومی
+				کسب‌وکار همچنان قابل مشاهده است.
+				اگر در این مدت اشتراک جدید فعال نشود، کسب‌وکار آرشیو می‌شود
+				و نمایش عمومی آن متوقف خواهد شد.
+			</div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    آیا با ورود به صفحه پرداخت، درخواست اشتراک ثبت می‌شود؟
+                </div>
+
+                <div class="faq-answer">
+                    خیر. درخواست زمانی ثبت می‌شود که رسید پرداخت ارسال شود.
+                </div>
+
+            </div>
+
+
+            <div class="faq-item">
+
+                <div class="faq-question">
+                    اگر درباره یکی از بخش‌ها سوال داشته باشم چه کار کنم؟
+                </div>
+
+                <div class="faq-answer">
+                    می‌توانید از راه‌های ارتباطی پشتیبانی MenuCi با ما در تماس باشید.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="footer">
+            راهنمای استفاده از MenuCi
+        </div>
+
+    </main>
+
+
+  
+
+    <button
+        type="button"
+        class="back-to-top"
+        id="backToTop"
+        aria-label="بازگشت به بالای صفحه"
+    >
+        ↑
+    </button>
+
+
+    <script>
+
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", function () {
+
+            if (window.scrollY > 400) {
+
+                backToTop.classList.add("show");
+
+            } else {
+
+                backToTop.classList.remove("show");
+
+            }
+
+        });
+
+
+        backToTop.addEventListener("click", function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>

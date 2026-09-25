@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+<title>{{ business.name }} | {{ business_config.name }}</title>
+
+    <style>
+
+        /* =====================================================
+           Vazirmatn
+        ===================================================== */
+
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}")
+                format("woff2");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Medium.woff2') }}")
+                format("woff2");
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-Bold.woff2') }}")
+                format("woff2");
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: "Vazirmatn";
+            src: url("{{ url_for('static', filename='font/Vazirmatn-ExtraBold.woff2') }}")
+                format("woff2");
+            font-weight: 800;
+            font-style: normal;
+        }
+
+
+        /* =====================================================
+           Business Theme
+        ===================================================== */
+
+        :root {
+
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+
+            --accent: #f59e0b;
+
+            --background: #f5f7fb;
+
+            --card: #ffffff;
+
+            --text: #202124;
+
+            --muted: #6b7280;
+
+            --border: #e5e7eb;
+
+        }
+
+
+        /* =====================================================
+   Business Type Theme
+===================================================== */
+
+:root {
+
+    --primary: {{ theme.primary }};
+    --primary-dark: {{ theme.primary_dark }};
+    --primary-light: {{ theme.primary_light }};
+
+    --background: {{ theme.background }};
+    --text: {{ theme.text }};
+    --muted: {{ theme.muted }};
+
+}
+
+        /* =====================================================
+           Reset
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                "Vazirmatn",
+                Tahoma,
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    var(--primary-light) 0,
+                    var(--background) 300px
+                );
+
+            color: var(--text);
+
+            line-height: 1.7;
+
+        }
+
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =====================================================
+           Page
+        ===================================================== */
+
+        .page {
+
+            width: 100%;
+
+            max-width: 900px;
+
+            margin: 0 auto;
+
+            padding-bottom: 40px;
+
+        }
+
+
+
+/* =====================================================
+           home-button
+        ===================================================== */
+
+
+.home-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+
+    z-index: 10;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 9px 13px;
+
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--primary-dark);
+
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+
+    transition: 0.2s;
+}
+
+.home-button:hover {
+    transform: translateY(-2px);
+    background: white;
+}
+
+
+
+
+        /* =====================================================
+           Banner
+        ===================================================== */
+
+        .banner {
+
+            height: 240px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
+
+        }
+
+
+        .banner::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.08);
+
+            top: -150px;
+            right: -80px;
+
+        }
+
+
+        .banner::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+            height: 220px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.06);
+
+            bottom: -130px;
+            left: -50px;
+
+        }
+
+
+        .banner img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            position: relative;
+
+            z-index: 1;
+
+        }
+
+
+        .banner-overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0,0,0,0.05),
+                    rgba(0,0,0,0.60)
+                );
+
+            z-index: 2;
+
+        }
+
+
+        /* =====================================================
+           Business Card
+        ===================================================== */
+.business-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--primary) 14%, white),
+            color-mix(in srgb, var(--primary) 6%, white) 55%,
+            color-mix(in srgb, var(--primary) 2%, white)
+        );
+
+    margin: -60px 15px 25px;
+
+    position: relative;
+
+    z-index: 5;
+
+    border-radius: 24px;
+
+    padding: 25px 20px 24px;
+
+    text-align: center;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.09);
+
+    border:
+        1px solid color-mix(
+            in srgb,
+            var(--primary) 15%,
+            white
+        );
+
+}
+
+        /* =====================================================
+           Logo
+        ===================================================== */
+
+        .logo {
+
+            width: 100px;
+            height: 100px;
+
+            margin: -72px auto 16px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            padding: 5px;
+
+            box-shadow:
+                0 7px 25px rgba(0,0,0,0.15);
+
+            overflow: hidden;
+
+            border:
+                3px solid var(--primary-light);
+
+        }
+
+
+        .logo img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+        }
+
+
+        .logo-placeholder {
+
+            width: 100%;
+            height: 100%;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    white
+                );
+
+            color: var(--primary);
+
+            font-size: 38px;
+
+        }
+
+
+        /* =====================================================
+           Business Information
+        ===================================================== */
+
+        .business-name {
+
+            margin: 0;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            color: var(--text);
+
+        }
+
+
+        .business-description {
+
+            max-width: 650px;
+
+            margin: 12px auto 0;
+
+            color: var(--muted);
+
+            line-height: 2;
+
+            font-size: 14px;
+
+        }
+/* =====================================================
+   Business Contact Information
+===================================================== */
+
+.business-contact-info {
+
+    max-width: 650px;
+
+    margin: 18px auto 0;
+
+    padding-top: 16px;
+
+    border-top:
+        1px solid color-mix(
+            in srgb,
+            var(--primary) 12%,
+            transparent
+        );
+
+}
+
+
+.business-contact-item {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 6px 0;
+
+    color: var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+.business-contact-icon {
+
+    color: var(--primary);
+
+    font-size: 16px;
+
+    flex-shrink: 0;
+
+}
+
+
+.business-contact-phone {
+
+    direction: ltr;
+
+    unicode-bidi: plaintext;
+
+}
+
+/* =====================================================
+   Quick Actions
+===================================================== */
+
+.actions {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 22px;
+
+}
+
+
+.action {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-width: 125px;
+
+    padding: 11px 16px;
+
+    border-radius: 14px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+/* دکمه اصلی */
+
+.action-primary {
+
+    background: var(--primary);
+
+    color: white;
+
+    box-shadow:
+        0 6px 18px color-mix(
+            in srgb,
+            var(--primary) 28%,
+            transparent
+        );
+
+}
+
+
+/* دکمه ثانویه */
+
+.action-secondary {
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 10%,
+            white
+        );
+
+    color: var(--primary-dark);
+
+    border:
+        1px solid color-mix(
+            in srgb,
+            var(--primary) 18%,
+            white
+        );
+
+}
+
+
+/* دکمه‌های فرعی */
+
+.action-outline {
+
+    background: rgba(255,255,255,0.55);
+
+    color: var(--primary-dark);
+
+    border:
+        1px solid color-mix(
+            in srgb,
+            var(--primary) 15%,
+            white
+        );
+
+}
+
+
+/* Hover */
+
+.action:hover {
+
+    transform: translateY(-2px);
+
+}
+
+
+.action-primary:hover {
+
+    box-shadow:
+        0 9px 22px color-mix(
+            in srgb,
+            var(--primary) 35%,
+            transparent
+        );
+
+}
+
+
+.action-secondary:hover,
+.action-outline:hover {
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 14%,
+            white
+        );
+
+}
+
+    /* =====================================================
+   Category Navigation
+===================================================== */
+/* =====================================================
+   Category Navigation - Premium
+===================================================== */
+
+.category-nav {
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding: 8px;
+
+    margin: 0 15px 24px;
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 4%,
+            white
+        );
+
+    border:
+        1px solid
+        color-mix(
+            in srgb,
+            var(--primary) 10%,
+            white
+        );
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.045);
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    position: sticky;
+
+    top: 10px;
+
+    z-index: 10;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+.category-nav::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =====================================================
+   Navigation Item
+===================================================== */
+
+.category-nav-item {
+
+    flex: 0 0 auto;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 78px;
+
+    padding: 9px 15px;
+
+    border-radius: 12px;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    border: 1px solid transparent;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+/* =====================================================
+   Hover
+===================================================== */
+
+.category-nav-item:hover {
+
+    background:
+        color-mix(
+            in srgb,
+            var(--primary) 7%,
+            white
+        );
+
+    color: var(--primary-dark);
+
+    transform: translateY(-1px);
+}
+
+
+/* =====================================================
+   Active
+===================================================== */
+
+.category-nav-item.active {
+
+    background: var(--primary);
+
+    color: white;
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 5px 14px
+        color-mix(
+            in srgb,
+            var(--primary) 25%,
+            transparent
+        );
+}
+
+
+/* =====================================================
+   Mobile
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .category-nav {
+
+        margin:
+            0 12px 20px;
+
+        padding: 7px;
+
+        gap: 6px;
+
+        border-radius: 16px;
+
+        top: 6px;
+    }
+
+
+    .category-nav-item {
+
+        min-width: 72px;
+
+        padding:
+            8px 13px;
+
+        font-size: 12px;
+
+        border-radius: 11px;
+    }
+
+}
+        /* =====================================================
+           Categories
+        ===================================================== */
+
+       .category {
+			margin: 0 15px 28px;
+			background: white;
+			border: 1px solid #e2e5e9;
+			border-radius: 20px;
+			padding: 18px;
+			box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+			    scroll-margin-top: 75px;
+
+		}
+
+		.category-header {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 15px;
+			padding-bottom: 12px;
+			border-bottom: 1px solid #eee;
+		}
+
+		.category-line {
+			width: 5px;
+			height: 28px;
+			background: var(--primary);
+			border-radius: 10px;
+			flex-shrink: 0;
+		}
+
+		.category-title {
+			margin: 0;
+			font-size: 20px;
+			font-weight: 800;
+}
+
+        .category-description {
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.9;
+
+            margin:
+                -5px 0 15px;
+
+        }
+
+
+        /* =====================================================
+           Products
+        ===================================================== */
+		.product {
+			background: #fafbfc;
+			border: 1px solid #eceff2;
+			border-radius: 17px;
+			margin-bottom: 12px;
+			padding: 14px;
+			display: flex;
+			gap: 14px;
+			box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+			transition: 0.2s;
+		}
+
+
+        .product:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 23px rgba(0,0,0,0.08);
+
+        }
+
+
+        /* =====================================================
+           Product Image
+        ===================================================== */
+
+        .product-image {
+
+            width: 100px;
+            height: 100px;
+
+            flex-shrink: 0;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary-light),
+                    #ffffff
+                );
+
+        }
+
+
+        .product-image img {
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+        }
+
+
+        /* =====================================================
+           Product Content
+        ===================================================== */
+
+        .product-content {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+        .product-top {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 12px;
+
+        }
+
+
+        .product-name {
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+            line-height: 1.6;
+
+        }
+
+
+        .price {
+
+            white-space: nowrap;
+
+            font-size: 15px;
+
+            font-weight: 800;
+
+            color: var(--primary-dark);
+
+            background: var(--primary-light);
+
+            padding: 5px 9px;
+
+            border-radius: 9px;
+
+        }
+
+
+        .product-description {
+
+            margin-top: 9px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.9;
+
+        }
+
+
+        /* =====================================================
+           Empty
+        ===================================================== */
+
+        .empty {
+
+            background: var(--card);
+
+            border-radius: 17px;
+
+            padding: 25px 15px;
+
+            text-align: center;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.04);
+
+            border:
+                1px dashed var(--border);
+
+        }
+
+
+        /* =====================================================
+           Contact
+        ===================================================== */
+
+        .contact {
+
+            background: var(--card);
+
+            margin: 28px 15px 0;
+
+            padding: 21px;
+
+            border-radius: 19px;
+
+            box-shadow:
+                0 4px 16px rgba(0,0,0,0.05);
+
+        }
+
+
+        .contact h3 {
+
+            margin:
+                0 0 12px;
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+            color: var(--primary-dark);
+
+        }
+
+
+        .contact-item {
+
+            padding: 9px 0;
+
+            color: #555;
+
+            line-height: 1.9;
+
+        }
+
+
+        /* =====================================================
+           Footer
+        ===================================================== */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 32px;
+
+            color: #9ca3af;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =====================================================
+           Mobile
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+            .banner {
+
+                height: 190px;
+
+            }
+
+
+            .business-card {
+
+                margin-top: -48px;
+
+                padding:
+                    22px 15px 20px;
+
+            }
+
+
+            .logo {
+
+                width: 88px;
+                height: 88px;
+
+                margin-top: -66px;
+
+            }
+
+
+            .business-name {
+
+                font-size: 23px;
+
+            }
+
+
+            .business-description {
+
+                font-size: 13px;
+
+            }
+
+
+            .action {
+
+                min-width: 100px;
+
+                padding:
+                    9px 12px;
+
+                font-size: 12px;
+
+            }
+
+
+            .category {
+
+                margin-left: 12px;
+                margin-right: 12px;
+
+            }
+
+
+            .category-title {
+
+                font-size: 19px;
+
+            }
+
+
+            .product {
+
+                padding: 12px;
+
+                gap: 12px;
+
+            }
+
+
+            .product-image {
+
+                width: 82px;
+                height: 82px;
+
+            }
+
+
+            .product-top {
+
+                flex-direction: column;
+
+                gap: 5px;
+
+            }
+
+
+            .product-name {
+
+                font-size: 15px;
+
+            }
+
+
+            .price {
+
+                font-size: 13px;
+
+                display: inline-block;
+
+            }
+
+
+            .contact {
+
+                margin-left: 12px;
+                margin-right: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+ 
+    <!-- =====================================================
+         Banner
+    ===================================================== -->
+
+  <div class="banner">
+
+    <a
+        href="{{ url_for('public.home') }}"
+        class="home-button"
+    >
+        🏠 صفحه اصلی
+    </a>
+
+    {% if business.banner %}
+
+        <img
+    src="{{ url_for('static', filename=business.banner) }}"
+            alt="{{ business.name }}"
+        >
+
+    {% endif %}
+
+    <div class="banner-overlay"></div>
+
+</div>
+
+  
+
+
+    <!-- =====================================================
+         Business Information
+    ===================================================== -->
+
+    <div class="business-card">
+
+
+        <div class="logo">
+
+            {% if business.logo %}
+
+                <img
+    src="{{ url_for('static', filename=business.logo) }}"
+                    alt="{{ business.name }}"
+                >
+
+            {% else %}
+
+                <div class="logo-placeholder">
+                    🏪
+                </div>
+
+            {% endif %}
+
+        </div>
+
+	<div style="color:var(--primary); font-size:14px; font-weight:700;">
+			{{ business_config.icon }}
+			{{ business_config.name }}
+		</div>
+       <h1 class="business-name">
+			{{ business.name }}
+		</h1>
+
+	
+
+        {% if business.description %}
+
+            <div class="business-description">
+                {{ business.description }}
+            </div>
+
+        {% endif %}
+{% if business.phone or business.address %}
+
+    <div class="business-contact-info">
+
+
+        {% if business.phone %}
+
+            <div class="business-contact-item">
+
+                <span class="business-contact-icon">
+                    📞
+                </span>
+
+                <span class="business-contact-phone">
+                    {{ business.phone }}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+
+        {% if business.address %}
+
+            <div class="business-contact-item">
+
+                <span class="business-contact-icon">
+                    📍
+                </span>
+
+                <span>
+                    {{ business.address }}
+                </span>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+{% endif %}
+
+        <!-- Quick Actions -->
+
+        <div class="actions">
+
+
+            {% if business.phone %}
+
+                <a
+                    class="action action-primary"
+                    href="tel:{{ business.phone }}"
+                >
+                    📞 تماس
+                </a>
+
+            {% endif %}
+
+
+            {% if business.address %}
+
+                <a
+                    class="action action-secondary"
+                    href="https://www.google.com/maps/search/?api=1&query={{ business.address | urlencode }}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    📍 مسیریابی
+                </a>
+
+            {% endif %}
+
+
+            {% if business.instagram %}
+
+                <a
+                   class="action action-outline"
+                    href="{{ business.instagram }}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    📷 اینستاگرام
+                </a>
+
+            {% endif %}
+
+
+            {% if business.website %}
+
+                <a
+                    class="action"
+                    href="{{ business.website }}"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    🌐 وب‌سایت
+                </a>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+<!-- =====================================================
+     Categories & Products
+===================================================== -->
+
+{% if categories %}
+
+    <!-- Category Navigation -->
+
+    <nav class="category-nav">
+
+        <a
+            href="#all-products"
+            class="category-nav-item active"
+        >
+            همه
+        </a>
+
+        {% for category in categories %}
+
+            <a
+                href="#category-{{ category.id }}"
+                class="category-nav-item"
+            >
+                {{ category.name }}
+            </a>
+
+        {% endfor %}
+
+    </nav>
+
+
+    <!-- Categories -->
+
+    <div id="all-products" class="categories">
+
+        {% for category in categories %}
+
+            <section
+                class="category"
+                id="category-{{ category.id }}"
+            >
+
+                <!-- Category Header -->
+
+                <div class="category-header">
+
+                    <div class="category-line"></div>
+
+                    <h2 class="category-title">
+                        {{ category.name }}
+                    </h2>
+
+                </div>
+
+
+                <!-- Category Description -->
+
+                {% if category.description %}
+
+                    <div class="category-description">
+                        {{ category.description }}
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Products -->
+
+                {% set category_products =
+                    products_by_category.get(category.id, [])
+                %}
+
+
+                {% if category_products %}
+
+                    {% for product in category_products %}
+
+                        <div class="product">
+
+                            {% if product.image %}
+
+                                <div class="product-image">
+
+                                    <img
+                                        src="{{ url_for('static', filename=product.image) }}"
+                                        alt="{{ product.name }}"
+                                        loading="lazy"
+                                    >
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="product-content">
+
+                                <div class="product-top">
+
+                                    <div class="product-name">
+                                        {{ product.name }}
+                                    </div>
+
+                                    <div class="price">
+
+                                        {{ "{:,.0f}".format(product.price) }}
+
+                                        تومان
+
+                                    </div>
+
+                                </div>
+
+
+                                {% if product.description %}
+
+                                    <div class="product-description">
+                                        {{ product.description }}
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+
+                {% else %}
+
+                    <div class="empty">
+                        محصولی در این دسته‌بندی وجود ندارد.
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        {% endfor %}
+
+    </div>
+
+
+{% else %}
+
+    <div
+        class="empty"
+        style="margin: 20px 15px;"
+    >
+        هنوز دسته‌بندی‌ای برای این کسب‌وکار ثبت نشده است.
+    </div>
+
+{% endif %}
+  
+
+    <div class="footer">
+	{{ business_config.name }}
+       {{ business_config.icon }}
+		
+    </div>
+
+
+</div>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const navItems = document.querySelectorAll(
+            ".category-nav-item"
+        );
+
+        const categories = document.querySelectorAll(
+            ".category"
+        );
+
+        if (!navItems.length || !categories.length) {
+            return;
+        }
+
+
+        function setActive(id) {
+
+            navItems.forEach(function (item) {
+
+                item.classList.toggle(
+                    "active",
+                    item.getAttribute("href") === "#" + id
+                );
+
+            });
+
+        }
+
+
+        /* هنگام کلیک روی دسته */
+
+        navItems.forEach(function (item) {
+
+            item.addEventListener("click", function () {
+
+                const targetId =
+                    item.getAttribute("href").substring(1);
+
+                setActive(targetId);
+
+            });
+
+        });
+
+
+        /* تشخیص دسته هنگام اسکرول */
+
+        function updateActiveCategory() {
+
+            let currentId = "all-products";
+
+            const scrollPosition =
+                window.scrollY + 180;
+
+
+            categories.forEach(function (category) {
+
+                const top =
+                    category.offsetTop;
+
+                if (scrollPosition >= top) {
+                    currentId = category.id;
+                }
+
+            });
+
+
+            setActive(currentId);
+
+        }
+
+
+        window.addEventListener(
+            "scroll",
+            updateActiveCategory,
+            { passive: true }
+        );
+
+
+        updateActiveCategory();
+
+    });
+
+</script>
+</body>
+
+</html>

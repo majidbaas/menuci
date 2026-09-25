@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>پرداخت اشتراک | MenuCi</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    @font-face {
+        font-family: Vazirmatn;
+        src: url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}");
+    }
+
+    body {
+        margin: 0;
+
+        font-family: Vazirmatn;
+
+        background: #f5f6f8;
+
+        color: #222;
+    }
+
+    .header {
+        background: #ffffff;
+
+        padding: 18px 35px;
+
+        border-bottom: 1px solid #e5e7eb;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+
+    .brand {
+        font-size: 21px;
+
+        font-weight: bold;
+
+        color: #112557;
+    }
+
+    .back-link {
+        text-decoration: none;
+
+        color: #112557;
+
+        background: #eef2ff;
+
+        padding: 8px 14px;
+
+        border-radius: 9px;
+
+        font-size: 13px;
+
+        font-weight: 700;
+    }
+
+    .container {
+        max-width: 700px;
+
+        margin: 45px auto;
+
+        padding: 0 20px;
+    }
+
+    .page-header {
+        text-align: center;
+
+        margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+        margin: 0 0 10px;
+
+        color: #112557;
+
+        font-size: 28px;
+    }
+
+    .page-header p {
+        margin: 0;
+
+        color: #777;
+
+        font-size: 14px;
+    }
+
+    .payment-card {
+        background: #ffffff;
+
+        border: 1px solid #e5e7eb;
+
+        border-radius: 18px;
+
+        padding: 28px;
+
+        box-shadow:
+            0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .section {
+        margin-bottom: 25px;
+
+        padding-bottom: 22px;
+
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .section:last-child {
+        margin-bottom: 0;
+
+        padding-bottom: 0;
+
+        border-bottom: none;
+    }
+
+    .section-title {
+        font-size: 16px;
+
+        font-weight: 800;
+
+        color: #112557;
+
+        margin-bottom: 15px;
+    }
+
+    .info-row {
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        gap: 15px;
+
+        padding: 11px 13px;
+
+        background: #f7f8fa;
+
+        border-radius: 9px;
+
+        margin-bottom: 9px;
+
+        font-size: 13px;
+    }
+
+    .info-row span {
+        color: #777;
+    }
+
+    .info-row strong {
+        color: #112557;
+    }
+
+    .amount {
+        font-size: 24px;
+
+        font-weight: 900;
+
+        color: #112557;
+
+        text-align: center;
+
+        margin-top: 15px;
+    }
+
+    .amount-unit {
+        font-size: 13px;
+
+        color: #777;
+
+        font-weight: normal;
+    }
+
+    .bank-box {
+        background: #f7f8fa;
+
+        border: 1px dashed #cfd5df;
+
+        border-radius: 12px;
+
+        padding: 18px;
+
+        line-height: 2;
+
+        font-size: 14px;
+    }
+
+    .bank-row {
+        display: flex;
+
+        justify-content: space-between;
+
+        gap: 15px;
+    }
+
+    .bank-row span {
+        color: #777;
+    }
+
+    .bank-row strong {
+        color: #112557;
+    }
+.card-number-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.card-number {
+    direction: ltr;
+
+    font-weight: 800;
+
+    color: #112557;
+
+    letter-spacing: 0.5px;
+}
+
+.copy-card-button {
+    border: none;
+
+    background: #112557;
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    padding: 6px 10px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+.copy-card-button:hover {
+    opacity: 0.9;
+}
+
+.copy-card-button.copied {
+    background: #26734d;
+}
+    .notice {
+        background: #fff8e6;
+
+        border: 1px solid #f0d58c;
+
+        color: #725b1b;
+
+        border-radius: 10px;
+
+        padding: 13px;
+
+        font-size: 12px;
+
+        line-height: 1.9;
+    }
+
+
+    /* =====================================
+       Receipt Form
+    ===================================== */
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #112557;
+
+        font-size: 13px;
+
+        font-weight: 700;
+    }
+
+    .required {
+        color: #c0392b;
+    }
+
+    .file-input {
+        width: 100%;
+
+        padding: 11px;
+
+        border: 1px solid #d7dbe2;
+
+        border-radius: 10px;
+
+        background: #ffffff;
+
+        font-family: inherit;
+
+        font-size: 13px;
+
+        cursor: pointer;
+    }
+
+    .file-input:hover {
+        border-color: #112557;
+    }
+
+    .description-input {
+        width: 100%;
+
+        min-height: 100px;
+
+        padding: 12px;
+
+        border: 1px solid #d7dbe2;
+
+        border-radius: 10px;
+
+        background: #ffffff;
+
+        font-family: inherit;
+
+        font-size: 13px;
+
+        resize: vertical;
+
+        outline: none;
+    }
+
+    .description-input:focus {
+        border-color: #112557;
+
+        box-shadow:
+            0 0 0 3px rgba(17, 37, 87, 0.08);
+    }
+
+    .form-help {
+        margin-top: 7px;
+
+        color: #888;
+
+        font-size: 11px;
+
+        line-height: 1.8;
+    }
+
+    .continue-button {
+        width: 100%;
+
+        border: none;
+
+        border-radius: 10px;
+
+        padding: 13px;
+
+        background: #112557;
+
+        color: #ffffff;
+
+        font-family: inherit;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+    }
+
+    .continue-button:hover {
+        opacity: 0.9;
+    }
+
+
+    /* =====================================
+       Flash Message
+    ===================================== */
+
+    .flash-container {
+        position: fixed;
+
+        top: 20px;
+
+        right: 20px;
+
+        z-index: 9999;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .flash-message {
+        min-width: 260px;
+
+        max-width: 350px;
+
+        padding: 12px 18px;
+
+        border-radius: 10px;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        box-shadow:
+            0 5px 20px rgba(0, 0, 0, 0.12);
+
+        animation:
+            flashIn 0.3s ease,
+            flashOut 0.5s ease 2.5s forwards;
+    }
+
+    .flash-message.success {
+        background: #eaf8ef;
+
+        color: #26734d;
+
+        border: 1px solid #b7e4c7;
+    }
+
+    .flash-message.warning {
+        background: #fff8e6;
+
+        color: #725b1b;
+
+        border: 1px solid #f0d58c;
+    }
+
+    .flash-message.error,
+    .flash-message.danger {
+        background: #fdecec;
+
+        color: #9b2c2c;
+
+        border: 1px solid #f1b5b5;
+    }
+
+    @keyframes flashIn {
+
+        from {
+            opacity: 0;
+
+            transform: translateX(30px);
+        }
+
+        to {
+            opacity: 1;
+
+            transform: translateX(0);
+        }
+
+    }
+
+    @keyframes flashOut {
+
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+
+            transform: translateX(30px);
+        }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+        .header {
+            padding: 15px;
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            gap: 12px;
+        }
+
+        .container {
+            margin: 25px auto;
+
+            padding: 0 15px;
+        }
+
+        .payment-card {
+            padding: 20px;
+        }
+
+        .bank-row {
+            flex-direction: column;
+
+            gap: 0;
+        }
+
+        .flash-container {
+            right: 15px;
+
+            left: 15px;
+        }
+
+        .flash-message {
+            min-width: auto;
+
+            max-width: none;
+        }
+
+    }
+
+</style>
+
+</head>
+
+<body>
+
+
+<header class="header">
+
+    <div class="brand">
+        📱 MenuCi
+    </div>
+
+    <a
+        class="back-link"
+        href="{{ url_for('dashboard.subscription') }}"
+    >
+        ← بازگشت به اشتراک
+    </a>
+
+</header>
+
+
+<main class="container">
+
+
+<!-- =====================================
+     Flash Messages
+====================================== -->
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+
+        <div class="flash-container">
+
+            {% for category, message in messages %}
+
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+{% endwith %}
+
+
+
+    <div class="payment-card">
+
+
+        <!-- =====================================
+             Subscription Information
+        ====================================== -->
+
+        <div class="section">
+
+            <div class="section-title">
+                اطلاعات اشتراک
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    پلن
+                </span>
+
+                <strong>
+                    {{ plan.name }}
+                </strong>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <span>
+                    مدت اشتراک
+                </span>
+
+                <strong>
+
+                    {% if option.duration_days == 30 %}
+
+                        ۱ ماهه
+
+                    {% elif option.duration_days == 90 %}
+
+                        ۳ ماهه
+
+                    {% elif option.duration_days == 180 %}
+
+                        ۶ ماهه
+
+                    {% else %}
+
+                        {{ option.duration_days }} روزه
+
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            <div class="amount">
+
+                {{ "{:,}".format(option.price) }}
+
+                <span class="amount-unit">
+                    تومان
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             Payment Information
+        ====================================== -->
+
+        <div class="section">
+
+            <div class="section-title">
+                اطلاعات پرداخت
+            </div>
+
+
+            <div class="bank-box">
+
+                <div class="bank-row">
+
+                    <span>
+                        نام صاحب حساب
+                    </span>
+
+                    <strong>
+                       مجید باستانی
+                    </strong>
+
+                </div>
+
+
+              <div class="bank-row">
+
+    <span>
+        شماره کارت
+    </span>
+
+    <div class="card-number-box">
+ <button
+            type="button"
+            class="copy-card-button"
+            id="copyCardButton"
+        >
+            کپی
+        </button>
+        <strong
+            class="card-number"
+            id="cardNumber"
+        >
+           6219-8619-4708-8976 
+        </strong>
+
+       
+
+    </div>
+
+</div>
+
+
+                <div class="bank-row">
+
+                    <span>
+                        مبلغ قابل پرداخت
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(option.price) }} تومان
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             Notice
+        ====================================== -->
+
+        <div class="section">
+
+            <div class="notice">
+
+                لطفاً ابتدا مبلغ بالا را به شماره کارت اعلام‌شده
+                واریز کنید. پس از پرداخت، تصویر رسید را در فرم
+                زیر بارگذاری کنید تا توسط مدیریت MenuCi بررسی شود.
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================
+             Receipt Upload Form
+        ====================================== -->
+
+        <div class="section">
+
+            <div class="section-title">
+                ارسال رسید پرداخت
+            </div>
+
+
+            <form
+                method="POST"
+                action="{{ url_for('dashboard.start_subscription_payment', option_id=option.id) }}"
+                enctype="multipart/form-data"
+            >
+
+
+                <!-- Receipt Image -->
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="payment_receipt"
+                    >
+                        تصویر رسید پرداخت
+                        <span class="required">*</span>
+                    </label>
+
+
+                    <input
+                        type="file"
+                        id="payment_receipt"
+                        name="payment_receipt"
+                        class="file-input"
+                        accept="image/*"
+                        required
+                    >
+
+
+                    <div class="form-help">
+                        تصویر واضح رسید پرداخت را انتخاب کنید.
+                    </div>
+
+                </div>
+
+
+
+                <!-- Description -->
+
+                <div class="form-group">
+
+                    <label
+                        class="form-label"
+                        for="payment_description"
+                    >
+                        توضیحات
+                        <span style="color: #999; font-weight: normal;">
+                            (اختیاری)
+                        </span>
+                    </label>
+
+
+                    <textarea
+                        id="payment_description"
+                        name="payment_description"
+                        class="description-input"
+                        placeholder="اگر توضیحی درباره پرداخت دارید، اینجا بنویسید..."
+                    ></textarea>
+
+                </div>
+
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="continue-button"
+                >
+                    ثبت و ارسال رسید برای بررسی
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const cardNumber =
+        document.getElementById("cardNumber");
+
+    const copyButton =
+        document.getElementById("copyCardButton");
+
+
+    copyButton.addEventListener("click", function () {
+
+        const cleanNumber =
+            cardNumber.textContent
+                .trim()
+                .replace(/-/g, "");
+
+
+        navigator.clipboard.writeText(cleanNumber)
+            .then(function () {
+
+                copyButton.textContent = "کپی شد";
+
+                copyButton.classList.add("copied");
+
+
+                setTimeout(function () {
+
+                    copyButton.textContent = "کپی";
+
+                    copyButton.classList.remove("copied");
+
+                }, 2000);
+
+            })
+            .catch(function () {
+
+                alert("کپی شماره کارت انجام نشد.");
+
+            });
+
+    });
+
+});
+
+</script>
+
+
+</body>
+
+</html>

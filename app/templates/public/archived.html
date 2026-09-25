@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+
+<head>
+ 
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>منو در حال حاضر فعال نیست | MenuCi</title>
+
+
+<style>
+
+    /* =====================================================
+       Vazirmatn
+    ===================================================== */
+
+    @font-face {
+
+        font-family: "Vazirmatn";
+
+        src:
+            url("{{ url_for('static', filename='font/Vazirmatn-Regular.woff2') }}")
+            format("woff2");
+
+        font-weight: 400;
+
+    }
+
+
+    @font-face {
+
+        font-family: "Vazirmatn";
+
+        src:
+            url("{{ url_for('static', filename='font/Vazirmatn-Medium.woff2') }}")
+            format("woff2");
+
+        font-weight: 500;
+
+    }
+
+
+    @font-face {
+
+        font-family: "Vazirmatn";
+
+        src:
+            url("{{ url_for('static', filename='font/Vazirmatn-Bold.woff2') }}")
+            format("woff2");
+
+        font-weight: 700;
+
+    }
+
+
+    @font-face {
+
+        font-family: "Vazirmatn";
+
+        src:
+            url("{{ url_for('static', filename='font/Vazirmatn-ExtraBold.woff2') }}")
+            format("woff2");
+
+        font-weight: 800;
+
+    }
+
+
+    /* =====================================================
+       Variables
+    ===================================================== */
+
+    :root {
+
+        --primary: #112557;
+
+        --primary-light: #eef2ff;
+
+        --background: #f6f8fc;
+
+        --text: #202124;
+
+        --muted: #6b7280;
+
+        --border: #e5e7eb;
+
+        --card: #ffffff;
+
+    }
+
+
+    /* =====================================================
+       Reset
+    ===================================================== */
+
+    * {
+
+        box-sizing: border-box;
+
+    }
+
+
+    html,
+    body {
+
+        margin: 0;
+
+        min-height: 100%;
+
+    }
+
+
+    body {
+
+        font-family:
+            "Vazirmatn",
+            Tahoma,
+            Arial,
+            sans-serif;
+
+        background:
+            radial-gradient(
+                circle at top,
+                #eef3ff 0,
+                var(--background) 45%,
+                #f8fafc 100%
+            );
+
+        color: var(--text);
+
+        line-height: 1.8;
+
+    }
+
+
+    /* =====================================================
+       Page
+    ===================================================== */
+
+    .page {
+
+        min-height: 100vh;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 25px 15px;
+
+    }
+
+
+    /* =====================================================
+       Card
+    ===================================================== */
+
+    .archive-card {
+
+        width: 100%;
+
+        max-width: 480px;
+
+        background: var(--card);
+
+        border: 1px solid var(--border);
+
+        border-radius: 28px;
+
+        padding: 42px 28px 30px;
+
+        text-align: center;
+
+        box-shadow:
+            0 20px 55px rgba(17, 37, 87, 0.09);
+
+    }
+
+
+    /* =====================================================
+       Logo
+    ===================================================== */
+
+    .logo {
+
+        width: 76px;
+
+        height: 76px;
+
+        margin: 0 auto 22px;
+
+        border-radius: 22px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--primary),
+                #263f82
+            );
+
+        color: white;
+
+        font-size: 30px;
+
+        font-weight: 800;
+
+        box-shadow:
+            0 10px 25px rgba(17, 37, 87, 0.20);
+
+    }
+
+
+    /* =====================================================
+       Status Icon
+    ===================================================== */
+
+    .status-icon {
+
+        width: 72px;
+
+        height: 72px;
+
+        margin: 0 auto 20px;
+
+        border-radius: 50%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #f3f4f6;
+
+        color: #6b7280;
+
+        font-size: 30px;
+
+    }
+
+
+    /* =====================================================
+       Heading
+    ===================================================== */
+
+    .title {
+
+        margin: 0;
+
+        font-size: 25px;
+
+        font-weight: 800;
+
+        color: var(--primary);
+
+    }
+
+
+    /* =====================================================
+       Description
+    ===================================================== */
+
+    .description {
+
+        max-width: 390px;
+
+        margin: 14px auto 0;
+
+        color: var(--muted);
+
+        font-size: 14px;
+
+        line-height: 2;
+
+    }
+
+
+    /* =====================================================
+       Business Name
+    ===================================================== */
+
+    .business-name {
+
+        display: inline-block;
+
+        margin-top: 18px;
+
+        padding: 7px 14px;
+
+        border-radius: 10px;
+
+        background: var(--primary-light);
+
+        color: var(--primary);
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+    }
+
+
+    /* =====================================================
+       Divider
+    ===================================================== */
+
+    .divider {
+
+        width: 70px;
+
+        height: 1px;
+
+        margin: 26px auto;
+
+        background: var(--border);
+
+    }
+
+
+    /* =====================================================
+       Home Button
+    ===================================================== */
+
+    .home-button {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 7px;
+
+        min-width: 170px;
+
+        padding: 11px 18px;
+
+        border-radius: 13px;
+
+        background: var(--primary);
+
+        color: white;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        text-decoration: none;
+
+        box-shadow:
+            0 7px 20px rgba(17, 37, 87, 0.18);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+
+    }
+
+
+    .home-button:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 25px rgba(17, 37, 87, 0.23);
+
+    }
+
+
+    /* =====================================================
+       Footer
+    ===================================================== */
+
+    .footer {
+
+        margin-top: 25px;
+
+        color: #9ca3af;
+
+        font-size: 11px;
+
+    }
+
+
+    .footer strong {
+
+        color: var(--primary);
+
+        font-weight: 800;
+
+    }
+
+
+    /* =====================================================
+       Mobile
+    ===================================================== */
+
+    @media (max-width: 600px) {
+
+        .page {
+
+            padding: 18px 12px;
+
+        }
+
+
+        .archive-card {
+
+            border-radius: 24px;
+
+            padding:
+                35px 20px 25px;
+
+        }
+
+
+        .logo {
+
+            width: 68px;
+
+            height: 68px;
+
+            border-radius: 20px;
+
+            font-size: 27px;
+
+        }
+
+
+        .status-icon {
+
+            width: 66px;
+
+            height: 66px;
+
+            font-size: 27px;
+
+        }
+
+
+        .title {
+
+            font-size: 22px;
+
+        }
+
+
+        .description {
+
+            font-size: 13px;
+
+        }
+
+    }
+
+</style>
+ 
+
+</head>
+
+<body>
+
+<div class="page">
+ 
+<main class="archive-card">
+
+
+    <!-- =================================================
+         MenuCi Logo
+    ================================================== -->
+
+    <div class="logo">
+
+        M
+
+    </div>
+
+
+    <!-- =================================================
+         Status Icon
+    ================================================== -->
+
+    <div class="status-icon">
+
+        🔒
+
+    </div>
+
+
+    <!-- =================================================
+         Title
+    ================================================== -->
+
+    <h1 class="title">
+
+        این منو در حال حاضر فعال نیست
+
+    </h1>
+
+
+    <!-- =================================================
+         Description
+    ================================================== -->
+
+    <p class="description">
+
+        دسترسی به منوی این کسب‌وکار در حال حاضر
+        موقتاً متوقف شده است.
+
+    </p>
+
+
+    <!-- =================================================
+         Business Name
+    ================================================== -->
+
+    {% if business %}
+
+        <div class="business-name">
+
+            {{ business.name }}
+
+        </div>
+
+    {% endif %}
+
+
+    <div class="divider"></div>
+
+
+    <!-- =================================================
+         Home Button
+    ================================================== -->
+
+    <a
+        href="{{ url_for('public.home') }}"
+        class="home-button"
+    >
+
+        🏠
+        <span>بازگشت به MenuCi</span>
+
+    </a>
+
+
+    <!-- =================================================
+         Footer
+    ================================================== -->
+
+    <div class="footer">
+
+        powered by
+        <strong>MenuCi</strong>
+
+    </div>
+
+
+</main>
+ 
+</div>
+
+</body>
+
+</html>
