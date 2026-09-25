@@ -92,8 +92,16 @@ def plans():
         ).all()
 
         for option in options:
-            plan_options.setdefault(option.plan_id, []).append(option)
+            plan_options.setdefault(
+                option.plan_id,
+                []
+            ).append(option)
 
+    return render_template(
+        "admin/plans.html",
+        plans=plans,
+        plan_options=plan_options
+    )
 @admin_bp.route("/subscriptions")
 def subscriptions():
 
