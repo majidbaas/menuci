@@ -189,6 +189,22 @@ BUSINESS_TYPES = {
         "suggested_categories": [],
     },
 
+    "hall": {
+        "name": " تالار پذیرایی",
+        "icon": "💒",
+
+        "theme": {
+            "primary": "#8b5e83",
+            "primary_dark": "#6d3f66",
+            "primary_light": "#faf5f8",
+            "accent": "#d4a373",
+        },
+
+        "default_image": None,
+        "default_description": None,
+        "suggested_categories": [],
+    },
+
 
     "other": {
         "name": "سایر",

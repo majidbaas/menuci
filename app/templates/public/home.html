@@ -1067,14 +1067,13 @@
 
                         {% if item.business.logo %}
 
-                            <img
-                                src="{{ url_for(
-                                    'static',
-                                    filename='uploads/' ~ item.business.logo
-                                ) }}"
-                                alt="{{ item.business.name }}"
-                            >
-
+                           <img
+								src="{{ url_for(
+									'static',
+									filename=item.business.logo
+								) }}"
+								alt="{{ item.business.name }}"
+							>
                         {% else %}
 
                             🏪
@@ -1165,30 +1164,37 @@
     </div>
 
 
-<div class="footer">
+<div class="footer"> 
 
-    <div class="footer-brand">
-        MenuCi
-    </div>
+ 
+<div class="footer-brand"> 
+    MenuCi 
+</div> 
 
-    <div class="footer-description">
-        منوی دیجیتال و معرفی آنلاین کسب‌وکارها؛
-        ساده، سریع و همیشه به‌روز.
-    </div>
+<div class="footer-description"> 
+    منوی دیجیتال و معرفی آنلاین کسب‌وکارها؛ 
+    ساده، سریع و همیشه به‌روز. 
+</div> 
 
-    <div class="footer-links">
-        <a href="{{ url_for('public.home') }}">کسب‌وکارها</a>
-        <a href="{{ url_for('public.guide') }}">راهنما</a>
-        <a href="#">درباره MenuCi</a>
-    </div>
+<div class="footer-links"> 
+    <a href="{{ url_for('public.home') }}">کسب‌وکارها</a> 
+    <a href="{{ url_for('public.guide') }}">راهنما</a> 
+    <a href="#">درباره MenuCi</a> 
+</div> 
 
-    <div class="footer-divider"></div>
+<div class="footer-divider"></div> 
 
-    <div class="footer-copy">
-        © 2026 MenuCi — تمامی حقوق محفوظ است.
-    </div>
+<div class="footer-copy"> 
+    © 2026 MenuCi — تمامی حقوق محفوظ است. 
+</div>
+
+<div class="footer-version">
+    نسخه 0.1
+</div>
+ 
 
 </div>
+
 </div>
 
 

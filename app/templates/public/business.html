@@ -1053,18 +1053,36 @@
            Footer
         ===================================================== */
 
-        .footer {
+ 
+/* =====================================================
+   MenuCi Footer
+===================================================== */
 
-            text-align: center;
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 25px 15px 30px;
+}
 
-            margin-top: 32px;
+.menuci-footer {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #999;
+    line-height: 1.8;
+}
 
-            color: #9ca3af;
+.menuci-footer a {
+    color: #666;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.2s ease;
+}
 
-            font-size: 12px;
-
-        }
-
+.menuci-footer a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+ 
 
         /* =====================================================
            Mobile
@@ -1379,6 +1397,7 @@
 
     </div>
 
+
 <!-- =====================================================
      Categories & Products
 ===================================================== -->
@@ -1398,12 +1417,20 @@
 
         {% for category in categories %}
 
-            <a
-                href="#category-{{ category.id }}"
-                class="category-nav-item"
-            >
-                {{ category.name }}
-            </a>
+            {% set category_products =
+                products_by_category.get(category.id, [])
+            %}
+
+            {% if category_products %}
+
+                <a
+                    href="#category-{{ category.id }}"
+                    class="category-nav-item"
+                >
+                    {{ category.name }}
+                </a>
+
+            {% endif %}
 
         {% endfor %}
 
@@ -1416,43 +1443,42 @@
 
         {% for category in categories %}
 
-            <section
-                class="category"
-                id="category-{{ category.id }}"
-            >
+            {% set category_products =
+                products_by_category.get(category.id, [])
+            %}
 
-                <!-- Category Header -->
+            {% if category_products %}
 
-                <div class="category-header">
+                <section
+                    class="category"
+                    id="category-{{ category.id }}"
+                >
 
-                    <div class="category-line"></div>
+                    <!-- Category Header -->
 
-                    <h2 class="category-title">
-                        {{ category.name }}
-                    </h2>
+                    <div class="category-header">
 
-                </div>
+                        <div class="category-line"></div>
 
+                        <h2 class="category-title">
+                            {{ category.name }}
+                        </h2>
 
-                <!-- Category Description -->
-
-                {% if category.description %}
-
-                    <div class="category-description">
-                        {{ category.description }}
                     </div>
 
-                {% endif %}
+
+                    <!-- Category Description -->
+
+                    {% if category.description %}
+
+                        <div class="category-description">
+                            {{ category.description }}
+                        </div>
+
+                    {% endif %}
 
 
-                <!-- Products -->
-
-                {% set category_products =
-                    products_by_category.get(category.id, [])
-                %}
-
-
-                {% if category_products %}
+                    <!-- Products -->
 
                     {% for product in category_products %}
 
@@ -1483,7 +1509,18 @@
 
                                     <div class="price">
 
-                                        {{ "{:,.0f}".format(product.price) }}
+                                        {{ "{:,.0f}".format(product.price)
+                                            | replace('0', '۰')
+                                            | replace('1', '۱')
+                                            | replace('2', '۲')
+                                            | replace('3', '۳')
+                                            | replace('4', '۴')
+                                            | replace('5', '۵')
+                                            | replace('6', '۶')
+                                            | replace('7', '۷')
+                                            | replace('8', '۸')
+                                            | replace('9', '۹')
+                                        }}
 
                                         تومان
 
@@ -1506,16 +1543,9 @@
 
                     {% endfor %}
 
+                </section>
 
-                {% else %}
-
-                    <div class="empty">
-                        محصولی در این دسته‌بندی وجود ندارد.
-                    </div>
-
-                {% endif %}
-
-            </section>
+            {% endif %}
 
         {% endfor %}
 
@@ -1532,16 +1562,30 @@
     </div>
 
 {% endif %}
-  
 
-    <div class="footer">
-	{{ business_config.name }}
-       {{ business_config.icon }}
-		
+
+ 
+<div class="footer">
+
+    {{ business_config.name }}
+    {{ business_config.icon }}
+
+    <div class="menuci-footer">
+
+        این منوی دیجیتال با
+        <a href="{{ url_for('public.home') }}">
+            MenuCi
+        </a>
+        ساخته شده است.
+
     </div>
+
+</div>
+ 
 
 
 </div>
+
 
 <script>
 

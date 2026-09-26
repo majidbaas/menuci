@@ -472,8 +472,8 @@
                         </span>
 
                         <strong>
-                            {{ plan.max_businesses }}
-                        </strong>
+							{{ plan.max_businesses | string | replace('0', '۰') | replace('1', '۱') | replace('2', '۲') | replace('3', '۳') | replace('4', '۴') | replace('5', '۵') | replace('6', '۶') | replace('7', '۷') | replace('8', '۸') | replace('9', '۹') }}
+						</strong>
 
                     </div>
 
@@ -485,8 +485,8 @@
                         </span>
 
                         <strong>
-                            {{ plan.max_categories }}
-                        </strong>
+							{{ plan.max_categories | string | replace('0', '۰') | replace('1', '۱') | replace('2', '۲') | replace('3', '۳') | replace('4', '۴') | replace('5', '۵') | replace('6', '۶') | replace('7', '۷') | replace('8', '۸') | replace('9', '۹') }}
+						</strong>
 
                     </div>
 
@@ -498,9 +498,8 @@
                         </span>
 
                         <strong>
-                            {{ plan.max_products }}
-                        </strong>
-
+							{{ plan.max_products | string | replace('0', '۰') | replace('1', '۱') | replace('2', '۲') | replace('3', '۳') | replace('4', '۴') | replace('5', '۵') | replace('6', '۶') | replace('7', '۷') | replace('8', '۸') | replace('9', '۹') }}
+						</strong>
                     </div>
 
                 </div>
@@ -596,23 +595,23 @@
                 </div>
 
 
-                <span class="option-price">
+               <span class="option-price">
 
-                    {% if option.price == 0 %}
+				{% if option.price == 0 %}
 
-                        رایگان
+					رایگان
 
-                    {% else %}
+				{% else %}
 
-                        {{ "{:,}".format(option.price) }}
+					{{ "{:,}".format(option.price) | replace('0', '۰') | replace('1', '۱') | replace('2', '۲') | replace('3', '۳') | replace('4', '۴') | replace('5', '۵') | replace('6', '۶') | replace('7', '۷') | replace('8', '۸') | replace('9', '۹') }}
 
-                        <span class="option-price-unit">
-                            تومان
-                        </span>
+					<span class="option-price-unit">
+						تومان
+					</span>
 
-                    {% endif %}
+				{% endif %}
 
-                </span>
+			</span>
 
             </label>
 
