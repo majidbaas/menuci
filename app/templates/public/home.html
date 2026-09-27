@@ -1067,13 +1067,17 @@
 
                         {% if item.business.logo %}
 
-                           <img
-								src="{{ url_for(
-									'static',
-									filename=item.business.logo
-								) }}"
-								alt="{{ item.business.name }}"
-							>
+<img
+    src="{{ url_for(
+        'static',
+        filename=(
+            item.business.logo
+            if item.business.logo.startswith('uploads/')
+            else 'uploads/' ~ item.business.logo
+        )
+    ) }}"
+    alt="{{ item.business.name }}"
+>
                         {% else %}
 
                             🏪
