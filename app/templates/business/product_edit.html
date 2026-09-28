@@ -879,7 +879,7 @@
         name="price"
         inputmode="numeric"
         autocomplete="off"
-        value="{{ "{:,}".format(product.price or 0) }}"
+       value="{{ "{:,.0f}".format(product.price or 0) }}"
     >
 
     <small>

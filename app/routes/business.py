@@ -8,6 +8,8 @@ from flask import (
     current_app
 )
 
+from PIL import Image
+
 from sqlalchemy import func
 from datetime import datetime, timezone
 import os
@@ -2360,7 +2362,6 @@ def allowed_image(filename):
         in ALLOWED_IMAGE_EXTENSIONS
     )
 
-
 def save_product_image(file):
 
     if not file or not file.filename:
@@ -2380,28 +2381,49 @@ def save_product_image(file):
         exist_ok=True
     )
 
-    original_name = secure_filename(
-        file.filename
-    )
-
-    extension = original_name.rsplit(
-        ".",
-        1
-    )[1].lower()
-
-    filename = (
-        f"{uuid.uuid4().hex}.{extension}"
-    )
+    filename = f"{uuid.uuid4().hex}.webp"
 
     file_path = os.path.join(
         upload_folder,
         filename
     )
 
-    file.save(file_path)
+    try:
+
+        image = Image.open(file.stream)
+
+        # اصلاح جهت عکس‌های گرفته‌شده با موبایل
+        try:
+            from PIL import ImageOps
+            image = ImageOps.exif_transpose(image)
+        except Exception:
+            pass
+
+        # حداکثر اندازه تصویر: 1200 × 1200
+        image.thumbnail(
+            (1200, 1200),
+            Image.Resampling.LANCZOS
+        )
+
+        # حفظ شفافیت PNG در صورت وجود
+        if image.mode in ("RGBA", "LA"):
+            image = image.convert("RGBA")
+        else:
+            image = image.convert("RGB")
+
+        # ذخیره به صورت WebP با کیفیت مناسب
+        image.save(
+            file_path,
+            "WEBP",
+            quality=82,
+            method=6,
+            optimize=True
+        )
+
+    except Exception:
+        return None
 
     return f"uploads/products/{filename}"
-
 
 def delete_product_image(image_path):
 

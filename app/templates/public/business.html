@@ -793,6 +793,153 @@
     }
 
 }
+
+
+
+
+/* =====================================================
+   Product Search
+===================================================== */
+
+.product-search {
+
+    position: relative;
+
+    margin: 0 15px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid #e1e5ea;
+
+    border-radius: 15px;
+
+    height: 48px;
+
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.04);
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.product-search:focus-within {
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px
+        color-mix(
+            in srgb,
+            var(--primary) 10%,
+            transparent
+        );
+}
+
+
+.product-search-icon {
+
+    width: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+
+
+.product-search input {
+
+    flex: 1;
+
+    height: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    color: var(--text);
+
+    padding: 0 4px;
+
+    direction: rtl;
+}
+
+
+.product-search input::placeholder {
+
+    color: #9ca3af;
+
+}
+
+
+.clear-search {
+
+    width: 34px;
+
+    height: 34px;
+
+    margin-left: 7px;
+
+    margin-right: 3px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    font-size: 20px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition: 0.2s ease;
+}
+
+
+.clear-search:hover {
+
+    background: #e5e7eb;
+
+    color: #374151;
+
+}
+
+
+/* وقتی جستجو فعال است */
+
+.product-search.has-value .clear-search {
+
+    display: flex;
+
+}
+
         /* =====================================================
            Categories
         ===================================================== */
@@ -892,6 +1039,7 @@
                     var(--primary-light),
                     #ffffff
                 );
+		    cursor: zoom-in;
 
         }
 
@@ -905,8 +1053,12 @@
 
             display: block;
 
-        }
+         transition: transform 0.25s ease;
+}
 
+.product-image:hover img {
+    transform: scale(1.05);
+}	
 
         /* =====================================================
            Product Content
@@ -945,24 +1097,18 @@
         }
 
 
-        .price {
+.price {
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 800;
 
-            white-space: nowrap;
+     color: #374151;
+    background: #f8fafc;
+    padding: 6px 12px;
+    border-radius: 10px;
 
-            font-size: 15px;
-
-            font-weight: 800;
-
-            color: var(--primary-dark);
-
-            background: var(--primary-light);
-
-            padding: 5px 9px;
-
-            border-radius: 9px;
-
-        }
-
+    border: 1px solid #d8dee6;
+}
 
         .product-description {
 
@@ -1149,7 +1295,22 @@
                 margin-right: 12px;
 
             }
+.product-search {
 
+    margin:
+        0 12px 20px;
+
+    height: 46px;
+
+    border-radius: 14px;
+
+}
+
+.product-search input {
+
+    font-size: 12px;
+
+}
 
             .category-title {
 
@@ -1208,6 +1369,171 @@
             }
 
         }
+
+
+/* =====================================================
+   Product Image Lightbox
+===================================================== */
+
+.image-lightbox {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    background: rgba(0, 0, 0, 0.78);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+
+    cursor: zoom-out;
+}
+
+
+.image-lightbox.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+.image-lightbox-content {
+
+    max-width: 92vw;
+    max-height: 88vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: default;
+}
+
+
+.image-lightbox-content img {
+
+    max-width: 92vw;
+    max-height: 88vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35);
+
+    display: block;
+
+}
+
+
+.image-lightbox-close {
+
+    position: absolute;
+
+    top: 18px;
+    right: 18px;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    color: #333;
+
+    font-size: 28px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+.image-lightbox-close:hover {
+
+    background: #ffffff;
+
+    transform: scale(1.08);
+
+}
+
+
+.image-lightbox-close:active {
+
+    transform: scale(0.94);
+
+}
+
+
+/* موبایل */
+
+@media (max-width: 600px) {
+
+    .image-lightbox {
+
+        padding: 15px;
+
+    }
+
+
+    .image-lightbox-content img {
+
+        max-width: 94vw;
+
+        max-height: 82vh;
+
+        border-radius: 13px;
+
+    }
+
+
+    .image-lightbox-close {
+
+        top: 12px;
+        right: 12px;
+
+        width: 38px;
+        height: 38px;
+
+        font-size: 25px;
+
+    }
+
+}
 
     </style>
 
@@ -1436,7 +1762,30 @@
 
     </nav>
 
+<div class="product-search">
 
+    <span class="product-search-icon">
+        🔎
+    </span>
+
+    <input
+        type="search"
+        id="productSearch"
+        placeholder="جستجوی محصول..."
+        autocomplete="off"
+    >
+
+    <button
+        type="button"
+        id="clearSearch"
+        class="clear-search"
+        aria-label="پاک کردن جستجو"
+        title="پاک کردن"
+    >
+        ×
+    </button>
+
+</div>
     <!-- Categories -->
 
     <div id="all-products" class="categories">
@@ -1497,7 +1846,34 @@
                                 </div>
 
                             {% endif %}
+<!-- Product Image Lightbox -->
 
+<div
+    id="imageLightbox"
+    class="image-lightbox"
+    aria-hidden="true"
+>
+
+    <button
+        type="button"
+        class="image-lightbox-close"
+        id="imageLightboxClose"
+        aria-label="بستن تصویر"
+    >
+        ×
+    </button>
+
+    <div class="image-lightbox-content">
+
+        <img
+            id="lightboxImage"
+            src=""
+            alt=""
+        >
+
+    </div>
+
+</div>
 
                             <div class="product-content">
 
@@ -1588,90 +1964,400 @@
 
 
 <script>
+ 
+document.addEventListener("DOMContentLoaded", function () {
 
-    document.addEventListener("DOMContentLoaded", function () {
+    const navItems = document.querySelectorAll(
+        ".category-nav-item"
+    );
 
-        const navItems = document.querySelectorAll(
-            ".category-nav-item"
-        );
+    const categories = document.querySelectorAll(
+        ".category"
+    );
 
-        const categories = document.querySelectorAll(
-            ".category"
-        );
+    const searchInput =
+        document.getElementById("productSearch");
 
-        if (!navItems.length || !categories.length) {
-            return;
-        }
+    const clearSearch =
+        document.getElementById("clearSearch");
 
-
-        function setActive(id) {
-
-            navItems.forEach(function (item) {
-
-                item.classList.toggle(
-                    "active",
-                    item.getAttribute("href") === "#" + id
-                );
-
-            });
-
-        }
+    const searchBox =
+        document.querySelector(".product-search");
 
 
-        /* هنگام کلیک روی دسته */
+ 
+
+    /* =====================================================
+       فعال کردن دسته‌بندی
+    ===================================================== */
+
+    function setActive(id) {
 
         navItems.forEach(function (item) {
 
-            item.addEventListener("click", function () {
-
-                const targetId =
-                    item.getAttribute("href").substring(1);
-
-                setActive(targetId);
-
-            });
+            item.classList.toggle(
+                "active",
+                item.getAttribute("href") === "#" + id
+            );
 
         });
 
-
-        /* تشخیص دسته هنگام اسکرول */
-
-        function updateActiveCategory() {
-
-            let currentId = "all-products";
-
-            const scrollPosition =
-                window.scrollY + 180;
+    }
 
 
-            categories.forEach(function (category) {
+    /* =====================================================
+       فیلتر محصولات
+    ===================================================== */
 
-                const top =
-                    category.offsetTop;
+    function filterProducts() {
+	 
+        const searchText =
+            searchInput.value.trim().toLowerCase();
 
-                if (scrollPosition >= top) {
-                    currentId = category.id;
+        let visibleProducts = 0;
+
+
+        categories.forEach(function (category) {
+
+            const products =
+                category.querySelectorAll(".product");
+
+            let visibleInCategory = 0;
+
+
+            products.forEach(function (product) {
+
+                const productName =
+                    product.querySelector(".product-name");
+
+                const productDescription =
+                    product.querySelector(".product-description");
+
+
+                const nameText =
+                    productName
+                        ? productName.textContent.toLowerCase()
+                        : "";
+
+
+                const descriptionText =
+                    productDescription
+                        ? productDescription.textContent.toLowerCase()
+                        : "";
+
+
+                const matches =
+                    !searchText ||
+                    nameText.includes(searchText) ||
+                    descriptionText.includes(searchText);
+
+
+                if (matches) {
+
+                    product.style.display = "";
+
+                    visibleInCategory++;
+
+                    visibleProducts++;
+
+                } else {
+
+                    product.style.display = "none";
+
                 }
 
             });
 
 
-            setActive(currentId);
+            /* اگر دسته‌بندی محصول قابل نمایش ندارد */
+
+            if (visibleInCategory > 0) {
+
+                category.style.display = "";
+
+            } else {
+
+                category.style.display = "none";
+
+            }
+
+        });
+
+
+        /* نمایش یا مخفی کردن دکمه پاک کردن */
+
+        if (searchText) {
+
+            searchBox.classList.add("has-value");
+
+        } else {
+
+            searchBox.classList.remove("has-value");
 
         }
 
 
-        window.addEventListener(
-            "scroll",
-            updateActiveCategory,
-            { passive: true }
+        /* پیام عدم وجود نتیجه */
+
+        let noResults =
+            document.getElementById("noSearchResults");
+
+
+        if (!noResults) {
+
+            noResults =
+                document.createElement("div");
+
+            noResults.id = "noSearchResults";
+
+            noResults.className = "empty";
+
+            noResults.textContent =
+                "محصولی پیدا نشد";
+
+            noResults.style.margin =
+                "20px 15px";
+
+            document
+                .getElementById("all-products")
+                .appendChild(noResults);
+
+        }
+
+
+        if (visibleProducts === 0 && searchText) {
+
+            noResults.style.display = "block";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       جستجوی محصول
+    ===================================================== */
+
+searchInput.addEventListener(
+    "input",
+    filterProducts
+);
+
+    /* =====================================================
+       پاک کردن جستجو
+    ===================================================== */
+
+    clearSearch.addEventListener(
+        "click",
+        function () {
+
+            searchInput.value = "";
+
+            filterProducts();
+
+            searchInput.focus();
+
+        }
+    );
+
+
+    /* =====================================================
+       هنگام کلیک روی دسته
+    ===================================================== */
+
+    navItems.forEach(function (item) {
+
+        item.addEventListener(
+            "click",
+            function () {
+
+                const targetId =
+                    item
+                        .getAttribute("href")
+                        .substring(1);
+
+                setActive(targetId);
+
+            }
         );
-
-
-        updateActiveCategory();
 
     });
 
+
+    /* =====================================================
+       تشخیص دسته هنگام اسکرول
+    ===================================================== */
+
+    function updateActiveCategory() {
+
+        let currentId = "all-products";
+
+        const scrollPosition =
+            window.scrollY + 180;
+
+
+        categories.forEach(function (category) {
+
+            if (
+                category.style.display === "none"
+            ) {
+                return;
+            }
+
+
+            const top =
+                category.offsetTop;
+
+
+            if (scrollPosition >= top) {
+
+                currentId =
+                    category.id;
+
+            }
+
+        });
+
+
+        setActive(currentId);
+
+    }
+
+
+    window.addEventListener(
+        "scroll",
+        updateActiveCategory,
+        { passive: true }
+    );
+
+
+    updateActiveCategory();
+
+});
+
+ 
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const productImages =
+        document.querySelectorAll(".product-image img");
+
+    const lightbox =
+        document.getElementById("imageLightbox");
+
+    const lightboxImage =
+        document.getElementById("lightboxImage");
+
+    const closeButton =
+        document.getElementById("imageLightboxClose");
+
+
+    if (
+        !productImages.length ||
+        !lightbox ||
+        !lightboxImage ||
+        !closeButton
+    ) {
+        return;
+    }
+
+
+    /* باز کردن تصویر */
+
+    productImages.forEach(function (image) {
+
+        image.addEventListener(
+            "click",
+            function () {
+
+                lightboxImage.src =
+                    image.src;
+
+                lightboxImage.alt =
+                    image.alt;
+
+                lightbox.classList.add("show");
+
+                lightbox.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+                document.body.style.overflow =
+                    "hidden";
+
+            }
+        );
+
+    });
+
+
+    /* بستن تصویر */
+
+    function closeLightbox() {
+
+        lightbox.classList.remove("show");
+
+        lightbox.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    closeButton.addEventListener(
+        "click",
+        closeLightbox
+    );
+
+
+    /* کلیک روی فضای بیرون تصویر */
+
+    lightbox.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target === lightbox
+            ) {
+
+                closeLightbox();
+
+            }
+
+        }
+    );
+
+
+    /* بستن با کلید Escape */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape" &&
+                lightbox.classList.contains("show")
+            ) {
+
+                closeLightbox();
+
+            }
+
+        }
+    );
+
+});
+
+ 
 </script>
 </body>
 

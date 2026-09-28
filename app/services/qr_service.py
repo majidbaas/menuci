@@ -5,13 +5,20 @@
 from pathlib import Path
 from flask import current_app
 import qrcode
+import arabic_reshaper
+from bidi.algorithm import get_display
 from PIL import Image, ImageDraw, ImageFont
-
 from app.business_types import (
     get_business_type,
 )
 
+def rtl_text(text):
+    if not text:
+        return ""
 
+    reshaped_text = arabic_reshaper.reshape(text)
+
+    return get_display(reshaped_text)
 # =========================================================
 # Generate Simple QR Code
 # =========================================================
@@ -323,10 +330,9 @@ def generate_qr_card(
     # Scan Guide
     # =====================================================
 
-    guide_text = (
+    guide_text = rtl_text(
         "برای مشاهده منو اسکن کنید"
     )
-     
     guide_box = draw.textbbox(
         (0, 0),
         guide_text,
@@ -356,7 +362,9 @@ def generate_qr_card(
     platform_name = "MenuCi"
 
     # شعار تبلیغاتی کوتاه و ظریف
-    platform_slogan = "منوی دیجیتال، ساده و حرفه‌ای"
+    platform_slogan = rtl_text(
+    "منوی دیجیتال، ساده و حرفه‌ای"
+    )
 
     # آدرس سایت از تنظیمات پروژه
     platform_url = current_app.config["MENUCI_URL"]

@@ -305,7 +305,48 @@
                 0 0 0 3px rgba(17, 37, 87, 0.08);
 
         }
+.password-wrapper {
+    position: relative;
+}
 
+.password-wrapper input {
+    padding-right: 48px;
+    direction: ltr;
+    text-align: left;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #f5f6f8;
+
+    font-size: 17px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s ease;
+}
+
+.password-toggle:hover {
+    background: #eef5ff;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.password-toggle:active {
+    transform: translateY(-50%) scale(0.95);
+}
 
         /* =========================================
            Username Guide
@@ -668,13 +709,27 @@
                 </label>
 
 
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    autocomplete="current-password"
-                    required
-                >
+                <div class="password-wrapper">
+
+    <input 
+        type="password" 
+        id="password" 
+        name="password" 
+        autocomplete="current-password" 
+        required 
+    >
+
+    <button
+        type="button"
+        class="password-toggle"
+        id="passwordToggle"
+        aria-label="نمایش رمز عبور"
+        title="نمایش رمز عبور"
+    >
+       🙊
+    </button>
+
+</div>
 
             </div>
 
@@ -719,7 +774,46 @@
 
 </main>
 
+<script>
 
+    const passwordInput = document.getElementById("password");
+    const passwordToggle = document.getElementById("passwordToggle");
+
+    passwordToggle.addEventListener("click", function () {
+
+        if (passwordInput.type === "password") {
+
+            passwordInput.type = "text";
+
+            passwordToggle.textContent = "🙈";
+            passwordToggle.setAttribute(
+                "aria-label",
+                "مخفی کردن رمز عبور"
+            );
+            passwordToggle.setAttribute(
+                "title",
+                "مخفی کردن رمز عبور"
+            );
+
+        } else {
+
+            passwordInput.type = "password";
+
+            passwordToggle.textContent = "🙊️";
+            passwordToggle.setAttribute(
+                "aria-label",
+                "نمایش رمز عبور"
+            );
+            passwordToggle.setAttribute(
+                "title",
+                "نمایش رمز عبور"
+            );
+
+        }
+
+    });
+
+</script>
 </body>
 
 </html>

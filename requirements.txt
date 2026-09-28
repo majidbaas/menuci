@@ -5,4 +5,7 @@ Flask-Login
 python-dotenv
 Pillow
 qrcode[pil]
+arabic-reshaper
+python-bidi
 jdatetime
+
