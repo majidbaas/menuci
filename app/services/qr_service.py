@@ -226,10 +226,14 @@ def generate_qr_card(
         ),
         fill=primary_color
     )
- 
-    # =====================================================
-    # Business Name
-    # =====================================================
+ # =====================================================
+# Business Name
+# =====================================================
+
+    # آماده‌سازی صحیح متن فارسی و راست‌به‌چپ
+    display_business_name = rtl_text(
+        business_name
+    )
 
     # حداکثر عرض مجاز نام
     max_title_width = 850
@@ -253,7 +257,7 @@ def generate_qr_card(
 
         title_box = draw.textbbox(
             (0, 0),
-            business_name,
+            display_business_name,
             font=current_title_font
         )
 
@@ -271,13 +275,15 @@ def generate_qr_card(
         (
             (card_width - title_width) / 2,
             60
-
         ),
-        business_name,
+        display_business_name,
         fill="white",
         font=current_title_font
-    )
+)
 
+# =====================================================
+# QR Area
+# =====================================================
     # =====================================================
     # QR Area
     # =====================================================
