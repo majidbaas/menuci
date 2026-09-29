@@ -2371,11 +2371,9 @@ def save_product_image(file):
         return None
 
     upload_folder = os.path.join(
-        current_app.static_folder,
-        "uploads",
+        current_app.config["UPLOAD_FOLDER"],
         "products"
     )
-
     os.makedirs(
         upload_folder,
         exist_ok=True
@@ -2503,7 +2501,6 @@ def save_business_image(file, folder_name):
         ".",
         1
     )[1].lower()
-
     # -----------------------------------------------------
     # نام تصادفی
     # -----------------------------------------------------
@@ -2511,6 +2508,24 @@ def save_business_image(file, folder_name):
     filename = (
         f"{uuid.uuid4().hex}.{extension}"
     )
+
+    # -----------------------------------------------------
+    # ساخت پوشه
+    # -----------------------------------------------------
+
+    upload_folder = os.path.join(
+        current_app.config["UPLOAD_FOLDER"],
+        folder_name
+    )
+
+    os.makedirs(
+        upload_folder,
+        exist_ok=True
+    )
+
+    # -----------------------------------------------------
+    # مسیر فایل
+    # -----------------------------------------------------
 
     file_path = os.path.join(
         upload_folder,
@@ -2524,8 +2539,9 @@ def save_business_image(file, folder_name):
     file.save(file_path)
 
     return f"uploads/{folder_name}/{filename}"
-
-
+    
+    
+    
 def delete_business_image(image_path):
     """
     حذف تصویر لوگو یا بنر کسب‌وکار
@@ -2535,8 +2551,8 @@ def delete_business_image(image_path):
         return
 
     file_path = os.path.join(
-        current_app.static_folder,
-        image_path
+        current_app.config["UPLOAD_FOLDER"],
+        image_path.replace("uploads/", "", 1)
     )
 
     if os.path.isfile(file_path):

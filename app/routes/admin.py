@@ -156,11 +156,11 @@ def subscription_receipt(subscription_id):
 
     return redirect(
         url_for(
-            "static",
-            filename=f"uploads/payments/{subscription.payment_receipt}"
+            "public.uploaded_file",
+            filename=f"payments/{subscription.payment_receipt}"
         )
     )
-
+    
 @admin_bp.route("/plans/create", methods=["GET", "POST"])
 def create_plan():
 

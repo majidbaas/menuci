@@ -1,6 +1,6 @@
 import colorsys
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_from_directory, current_app
 
 from app.extensions import db
 from app.models.business import Business
@@ -20,7 +20,17 @@ public_bp = Blueprint(
     "public",
     __name__
 )
+# =========================================================
+# Serve Persistent Uploads
+# =========================================================
 
+@public_bp.route("/uploads/<path:filename>")
+def uploaded_file(filename):
+
+    return send_from_directory(
+        current_app.config["UPLOAD_FOLDER"],
+        filename
+    )
 
 # =========================================================
 # Build Business Theme

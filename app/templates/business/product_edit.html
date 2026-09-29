@@ -759,7 +759,7 @@
 
                         <img
                             class="product-image"
-                            src="{{ url_for('static', filename=product.image) }}"
+                            src="{{ url_for('public.uploaded_file', filename=product.image.replace('uploads/', '')) }}"
                             alt="{{ product.name }}"
                         >
 
@@ -804,7 +804,7 @@
 
         <img
             id="preview-image"
-            src="{{ url_for('static', filename=product.image) }}"
+            src="{{ url_for('public.uploaded_file', filename=product.image.replace('uploads/', '')) }}"
             alt="{{ product.name }}"
             style="
                 width: 150px;

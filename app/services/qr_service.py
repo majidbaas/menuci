@@ -26,8 +26,8 @@ def rtl_text(text):
 def generate_qr_code(url, filename):
 
     upload_folder = Path(
-        "app/static/uploads/qr"
-    )
+        current_app.config["UPLOAD_FOLDER"]
+    ) / "qr"
 
     upload_folder.mkdir(
         parents=True,
@@ -68,8 +68,8 @@ def generate_qr_card(
 ):
 
     upload_folder = Path(
-        "app/static/uploads/qr"
-    )
+        current_app.config["UPLOAD_FOLDER"]
+    ) / "qr"
 
     upload_folder.mkdir(
         parents=True,

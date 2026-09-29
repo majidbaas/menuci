@@ -1383,35 +1383,24 @@
 
     z-index: 9999;
 
-    display: flex;
+    display: none;
 
     align-items: center;
     justify-content: center;
 
     padding: 25px;
 
+ 
     background: rgba(0, 0, 0, 0.78);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 0.25s ease,
-        visibility 0.25s ease;
-
-    cursor: zoom-out;
 }
 
 
 .image-lightbox.show {
 
-    opacity: 1;
-
-    visibility: visible;
+    display: flex;
 
 }
-
+ 
 
 .image-lightbox-content {
 
@@ -1428,7 +1417,7 @@
 
 
 .image-lightbox-content img {
-
+ 
     max-width: 92vw;
     max-height: 88vh;
 
@@ -1561,7 +1550,7 @@
     {% if business.banner %}
 
         <img
-    src="{{ url_for('static', filename=business.banner) }}"
+    src="{{ url_for('public.uploaded_file', filename=business.banner.replace('uploads/', '')) }}"
             alt="{{ business.name }}"
         >
 
@@ -1586,7 +1575,7 @@
             {% if business.logo %}
 
                 <img
-    src="{{ url_for('static', filename=business.logo) }}"
+    src="{{ url_for('public.uploaded_file', filename=business.logo.replace('uploads/', '')) }}"
                     alt="{{ business.name }}"
                 >
 
@@ -1838,7 +1827,7 @@
                                 <div class="product-image">
 
                                     <img
-                                        src="{{ url_for('static', filename=product.image) }}"
+                                        src="{{ url_for('public.uploaded_file', filename=product.image.replace('uploads/', '')) }}"
                                         alt="{{ product.name }}"
                                         loading="lazy"
                                     >
@@ -1846,34 +1835,7 @@
                                 </div>
 
                             {% endif %}
-<!-- Product Image Lightbox -->
 
-<div
-    id="imageLightbox"
-    class="image-lightbox"
-    aria-hidden="true"
->
-
-    <button
-        type="button"
-        class="image-lightbox-close"
-        id="imageLightboxClose"
-        aria-label="بستن تصویر"
-    >
-        ×
-    </button>
-
-    <div class="image-lightbox-content">
-
-        <img
-            id="lightboxImage"
-            src=""
-            alt=""
-        >
-
-    </div>
-
-</div>
 
                             <div class="product-content">
 
@@ -1962,7 +1924,34 @@
 
 </div>
 
+<!-- Product Image Lightbox -->
 
+<div
+    id="imageLightbox"
+    class="image-lightbox"
+    aria-hidden="true"
+>
+
+    <button
+        type="button"
+        class="image-lightbox-close"
+        id="imageLightboxClose"
+        aria-label="بستن تصویر"
+    >
+        ×
+    </button>
+
+    <div class="image-lightbox-content">
+
+        <img
+            id="lightboxImage"
+            src=""
+            alt=""
+        >
+
+    </div>
+
+</div>
 <script>
  
 document.addEventListener("DOMContentLoaded", function () {
@@ -2281,7 +2270,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     image.alt;
 
                 lightbox.classList.add("show");
-
+			
                 lightbox.setAttribute(
                     "aria-hidden",
                     "false"
@@ -2319,22 +2308,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    /* کلیک روی فضای بیرون تصویر */
-
-    lightbox.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === lightbox
-            ) {
-
-                closeLightbox();
-
-            }
-
-        }
-    );
+ 
 
 
     /* بستن با کلید Escape */

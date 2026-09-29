@@ -13,7 +13,8 @@ from flask import (
     url_for,
     flash,
     abort,
-    request
+    request,
+    current_app
 )
 
 from flask_login import login_required, current_user
@@ -524,11 +525,9 @@ def start_subscription_payment(option_id):
     # برای گرفتن ID درخواست قبل از ساخت نام فایل
     db.session.flush()
 
-    # ساخت پوشه آپلود فیش
+    # ساخت پوشه آپلود فیش در فضای دائمی
     upload_folder = os.path.join(
-        "app",
-        "static",
-        "uploads",
+        current_app.config["UPLOAD_FOLDER"],
         "payments"
     )
 

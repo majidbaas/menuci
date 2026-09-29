@@ -19,3 +19,8 @@ class Config:
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    UPLOAD_FOLDER = os.getenv(
+        "UPLOAD_FOLDER",
+        "/opt/app-root/src/data/uploads"
+    )
