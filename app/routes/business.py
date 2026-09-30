@@ -243,7 +243,7 @@ def qr_code(business_id):
         business_config=get_business_type(business.business_type)
     ) 
     
-   # =========================================================
+ # =========================================================
 # Download QR Code
 # =========================================================
 
@@ -268,9 +268,7 @@ def download_qr_code(business_id):
         )
 
     qr_folder = os.path.join(
-        current_app.root_path,
-        "static",
-        "uploads",
+        current_app.config["UPLOAD_FOLDER"],
         "qr"
     )
 
@@ -281,7 +279,6 @@ def download_qr_code(business_id):
         filename
     )
 
- 
     public_url = url_for(
         "public.business_page",
         slug=business.slug,
@@ -303,7 +300,6 @@ def download_qr_code(business_id):
         download_name=f"{business.slug}-qr.png",
         mimetype="image/png"
     )
- 
 
 # =========================================================
 # ایجاد کسب‌وکار
