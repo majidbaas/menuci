@@ -1090,11 +1090,11 @@
 
 <img
     src="{{ url_for(
-        'static',
+        'public.uploaded_file',
         filename=(
-            item.business.logo
+            item.business.logo.replace('uploads/', '', 1)
             if item.business.logo.startswith('uploads/')
-            else 'uploads/' ~ item.business.logo
+            else item.business.logo
         )
     ) }}"
     alt="{{ item.business.name }}"

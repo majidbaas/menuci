@@ -435,6 +435,75 @@
     }
 
 
+
+/* =========================================
+   Mobile Management Menu
+========================================= */
+
+.mobile-management-menu {
+    display: none;
+}
+
+
+@media (max-width: 600px) {
+
+    .mobile-management-menu {
+
+        display: flex;
+
+        gap: 8px;
+
+        overflow-x: auto;
+
+        padding: 4px 2px 10px;
+
+        margin-bottom: 20px;
+
+        white-space: nowrap;
+
+        scrollbar-width: thin;
+
+        -webkit-overflow-scrolling: touch;
+
+    }
+
+
+    .mobile-management-menu a {
+
+        flex: 0 0 auto;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 8px 12px;
+
+        border-radius: 9px;
+
+        background: #ffffff;
+
+        border: 1px solid #e2e5e9;
+
+        color: #333;
+
+        text-decoration: none;
+
+        font-size: 12px;
+
+    }
+
+
+    .mobile-management-menu a:active {
+
+        background: #f0f3f7;
+
+    }
+
+}
+
+
     /* =========================================
        Responsive
     ========================================= */
@@ -697,13 +766,40 @@
     مدیریت کسب‌وکار
 </h2>
 
+<div class="mobile-management-menu">
 
+    <a href="#products">
+        🍔 محصولات
+    </a>
+
+    <a href="#categories">
+        📂 دسته‌بندی‌ها
+    </a>
+
+    <a href="#business-info">
+        ✏️ اطلاعات کسب‌وکار
+    </a>
+
+    <a href="#appearance">
+        🎨 ظاهر صفحه
+    </a>
+
+    <a href="#qr-code">
+        📱 QR Code
+    </a>
+
+    <a href="#public-page">
+        👁 صفحه عمومی
+    </a>
+
+</div>
 <section class="management-grid">
 
 
     <!-- Products -->
 
     <a
+	    id="products"
         class="management-card"
         href="{{ url_for(
             'business.products',
@@ -731,6 +827,7 @@
     <!-- Categories -->
 
     <a
+		id="categories"
         class="management-card"
         href="{{ url_for(
             'business.categories',
@@ -758,6 +855,7 @@
     <!-- Business Info -->
 
     <a
+	    id="business-info"
         class="management-card"
         href="{{ url_for(
             'business.edit',
@@ -785,6 +883,7 @@
     <!-- Appearance -->
 
     <a
+	id="appearance"
     class="management-card"
     href="{{ url_for(
         'business.appearance',
@@ -811,6 +910,7 @@
     <!-- QR Code -->
 
 <a
+	 id="qr-code"
     href="{{ url_for('business.qr_code', business_id=business.id) }}"
     class="management-card"
 >
@@ -827,6 +927,7 @@
     <!-- Public Page -->
 
     <a
+		id="public-page"
         class="management-card"
         href="{{ url_for(
             'public.business_page',
